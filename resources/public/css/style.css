@@ -1,0 +1,49 @@
+/** Custom Styles **/
+
+body {
+    /* font-family: "Gill Sans", "Gill Sans MT", sans-serif; */
+    /* font-size: 14px; */
+}
+
+a {
+    color: #005698;
+    cursor: pointer;
+}
+
+a.button {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #E58F0D;
+}
+
+/* h1 { font-size: 2.5em; } */
+h1#title {
+    background-color: #8C948A;
+    color: white;
+    padding: 10px 20px;
+}
+
+/** Body **/
+#wrapper {
+    padding: 0px 20px;
+}
+
+/** Navigation **/
+#nav .container {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/** Form **/
+/* #clear-form { */
+/*     color: #d14; */
+/*     text-decoration: underline; */
+/* } */
+
+/* #generate { */
+/*     font-size: 1.3em; */
+/*     margin-right: 5px; */
+/* } */
