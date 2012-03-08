@@ -16,7 +16,8 @@
                                   " active"))
             :href "/"}
         "Dates for Years"]]
-      [:li
+      [:li {:class (when (= path "/years-for-dates")
+                     "active")}
        [:a {:id "years-for-dates"
             :class (str "first" (when (= path "/years-for-dates")
                                   " active"))
