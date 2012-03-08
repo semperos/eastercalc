@@ -13025,6 +13025,285 @@ jayq.util.clj__GT_js = function clj__GT_js(b) {
     return cljs.core.assoc.call(null, b, clj__GT_js.call(null, e), clj__GT_js.call(null, f))
   }, cljs.core.ObjMap.fromObject([], {}), b).strobj : cljs.core.truth_(cljs.core.coll_QMARK_.call(null, b)) ? cljs.core.apply.call(null, cljs.core.array, cljs.core.map.call(null, clj__GT_js, b)) : cljs.core.truth_("\ufdd0'else") ? b : null
 };
+jayq.core = {};
+jayq.core.crate_meta = function(a) {
+  return a.prototype._crateGroup
+};
+jayq.core.__GT_selector = function(a) {
+  return cljs.core.truth_(cljs.core.string_QMARK_.call(null, a)) ? a : cljs.core.truth_(cljs.core.fn_QMARK_.call(null, a)) ? cljs.core.str.call(null, "[crateGroup=", jayq.core.crate_meta.call(null, a), "]") : cljs.core.truth_(cljs.core.keyword_QMARK_.call(null, a)) ? cljs.core.name.call(null, a) : cljs.core.truth_("\ufdd0'else") ? a : null
+};
+jayq.core.$ = function() {
+  var a = function(a, b) {
+    var e = cljs.core.nth.call(null, b, 0, null);
+    return cljs.core.truth_(cljs.core.not.call(null, e)) ? jQuery.call(null, jayq.core.__GT_selector.call(null, a)) : jQuery.call(null, jayq.core.__GT_selector.call(null, a), e)
+  }, b = function(b, d) {
+    var e = null;
+    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), b = cljs.core.rest(b);
+    return a.call(this, d, b)
+  };
+  return b
+}();
+jQuery.prototype.cljs$core$IReduce$ = !0;
+jQuery.prototype.cljs$core$IReduce$_reduce = function(a, b) {
+  return cljs.core.ci_reduce.call(null, jayq.core.coll, b, cljs.core.first.call(null, a), cljs.core.count.call(null, a))
+};
+jQuery.prototype.cljs$core$IReduce$_reduce = function(a, b, c) {
+  return cljs.core.ci_reduce.call(null, jayq.core.coll, b, c, jayq.core.i)
+};
+jQuery.prototype.cljs$core$ILookup$ = !0;
+jQuery.prototype.cljs$core$ILookup$_lookup = function() {
+  var a = null;
+  return function(a, c, d) {
+    switch(arguments.length) {
+      case 2:
+        var e = a.slice(c, c + 1);
+        return cljs.core.truth_(e) ? e : null;
+      case 3:
+        return cljs.core._nth.call(null, a, c, d)
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
+jQuery.prototype.cljs$core$ISequential$ = !0;
+jQuery.prototype.cljs$core$IIndexed$ = !0;
+jQuery.prototype.cljs$core$IIndexed$_nth = function(a, b) {
+  return cljs.core.truth_(b < cljs.core.count.call(null, a)) ? a.slice(b, b + 1) : null
+};
+jQuery.prototype.cljs$core$IIndexed$_nth = function(a, b, c) {
+  return cljs.core.truth_(b < cljs.core.count.call(null, a)) ? a.slice(b, b + 1) : cljs.core.truth_(void 0 === c) ? null : c
+};
+jQuery.prototype.cljs$core$ICounted$ = !0;
+jQuery.prototype.cljs$core$ICounted$_count = function(a) {
+  return a.size()
+};
+jQuery.prototype.cljs$core$ISeq$ = !0;
+jQuery.prototype.cljs$core$ISeq$_first = function(a) {
+  return a.slice(0, 1)
+};
+jQuery.prototype.cljs$core$ISeq$_rest = function(a) {
+  return cljs.core.truth_(1 < cljs.core.count.call(null, a)) ? a.slice(1) : cljs.core.list.call(null)
+};
+jQuery.prototype.cljs$core$ISeqable$ = !0;
+jQuery.prototype.cljs$core$ISeqable$_seq = function(a) {
+  return cljs.core.truth_(a.get(0)) ? a : null
+};
+jQuery.prototype.call = function() {
+  var a = null;
+  return function(a, c, d) {
+    switch(arguments.length) {
+      case 2:
+        return cljs.core._lookup.call(null, this, c);
+      case 3:
+        return cljs.core._lookup.call(null, this, c, d)
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
+jayq.core.anim = function(a, b, c) {
+  return a.animate(jayq.util.map__GT_js.call(null, b), c)
+};
+jayq.core.text = function(a, b) {
+  return a.text(b)
+};
+jayq.core.css = function(a, b) {
+  return cljs.core.truth_(cljs.core.keyword_QMARK_.call(null, b)) ? a.css(cljs.core.name.call(null, b)) : a.css(jayq.util.map__GT_js.call(null, b))
+};
+jayq.core.attr = function() {
+  var a = function(a, b, e) {
+    e = cljs.core.nth.call(null, e, 0, null);
+    b = cljs.core.name.call(null, b);
+    return cljs.core.truth_(cljs.core.not.call(null, e)) ? a.attr(b) : a.attr(b, e)
+  }, b = function(b, d, e) {
+    var f = null;
+    goog.isDef(e) && (f = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0));
+    return a.call(this, b, d, f)
+  };
+  b.cljs$lang$maxFixedArity = 2;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), e = cljs.core.first(cljs.core.next(b)), b = cljs.core.rest(cljs.core.next(b));
+    return a.call(this, d, e, b)
+  };
+  return b
+}();
+jayq.core.data = function() {
+  var a = function(a, b, e) {
+    e = cljs.core.nth.call(null, e, 0, null);
+    b = cljs.core.name.call(null, b);
+    return cljs.core.truth_(cljs.core.not.call(null, e)) ? a.data(b) : a.data(b, e)
+  }, b = function(b, d, e) {
+    var f = null;
+    goog.isDef(e) && (f = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0));
+    return a.call(this, b, d, f)
+  };
+  b.cljs$lang$maxFixedArity = 2;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), e = cljs.core.first(cljs.core.next(b)), b = cljs.core.rest(cljs.core.next(b));
+    return a.call(this, d, e, b)
+  };
+  return b
+}();
+jayq.core.add_class = function(a, b) {
+  var c = cljs.core.name.call(null, b);
+  return a.addClass(c)
+};
+jayq.core.remove_class = function(a, b) {
+  var c = cljs.core.name.call(null, b);
+  return a.removeClass(c)
+};
+jayq.core.append = function(a, b) {
+  return a.append(b)
+};
+jayq.core.prepend = function(a, b) {
+  return a.prepend(b)
+};
+jayq.core.remove = function(a) {
+  return a.remove()
+};
+jayq.core.hide = function() {
+  var a = function(a, b) {
+    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
+    return a.hide(e, f)
+  }, b = function(b, d) {
+    var e = null;
+    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), b = cljs.core.rest(b);
+    return a.call(this, d, b)
+  };
+  return b
+}();
+jayq.core.show = function() {
+  var a = function(a, b) {
+    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
+    return a.show(e, f)
+  }, b = function(b, d) {
+    var e = null;
+    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), b = cljs.core.rest(b);
+    return a.call(this, d, b)
+  };
+  return b
+}();
+jayq.core.fade_out = function() {
+  var a = function(a, b) {
+    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
+    return a.fadeOut(e, f)
+  }, b = function(b, d) {
+    var e = null;
+    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), b = cljs.core.rest(b);
+    return a.call(this, d, b)
+  };
+  return b
+}();
+jayq.core.fade_in = function() {
+  var a = function(a, b) {
+    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
+    return a.fadeIn(e, f)
+  }, b = function(b, d) {
+    var e = null;
+    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), b = cljs.core.rest(b);
+    return a.call(this, d, b)
+  };
+  return b
+}();
+jayq.core.slide_up = function() {
+  var a = function(a, b) {
+    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
+    return a.slideUp(e, f)
+  }, b = function(b, d) {
+    var e = null;
+    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), b = cljs.core.rest(b);
+    return a.call(this, d, b)
+  };
+  return b
+}();
+jayq.core.slide_down = function() {
+  var a = function(a, b) {
+    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
+    return a.slideDown(e, f)
+  }, b = function(b, d) {
+    var e = null;
+    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), b = cljs.core.rest(b);
+    return a.call(this, d, b)
+  };
+  return b
+}();
+jayq.core.bind = function(a, b, c) {
+  return a.bind(cljs.core.name.call(null, b), c)
+};
+jayq.core.find = function(a, b) {
+  return a.find(cljs.core.name.call(null, b))
+};
+jayq.core.trigger = function(a, b) {
+  return a.trigger(cljs.core.name.call(null, b))
+};
+jayq.core.delegate = function(a, b, c, d) {
+  return a.delegate(jayq.core.__GT_selector.call(null, b), cljs.core.name.call(null, c), d)
+};
+jayq.core.inner = function(a, b) {
+  return a.html(b)
+};
+jayq.core.empty = function(a) {
+  return a.empty()
+};
+jayq.core.val = function() {
+  var a = function(a, b) {
+    var e = cljs.core.nth.call(null, b, 0, null);
+    return cljs.core.truth_(e) ? a.val(e) : a.val()
+  }, b = function(b, d) {
+    var e = null;
+    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), b = cljs.core.rest(b);
+    return a.call(this, d, b)
+  };
+  return b
+}();
+jayq.core.queue = function(a, b) {
+  return a.queue(b)
+};
+jayq.core.dequeue = function(a) {
+  return jayq.core.$.call(null, a).dequeue()
+};
+jayq.core.xhr = function(a, b, c) {
+  var d = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null), b = jayq.util.map__GT_js.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'type", "\ufdd0'data", "\ufdd0'success"], {"\ufdd0'type":clojure.string.upper_case.call(null, cljs.core.name.call(null, d)), "\ufdd0'data":jayq.util.map__GT_js.call(null, b), "\ufdd0'success":c}));
+  return jQuery.ajax(a, b)
+};
 clojure.browser = {};
 clojure.browser.event = {};
 clojure.browser.event.EventType = {};
@@ -13379,285 +13658,6 @@ clojure.browser.net.xpc_connection = function() {
     throw"Invalid arity: " + arguments.length;
   }
 }();
-jayq.core = {};
-jayq.core.crate_meta = function(a) {
-  return a.prototype._crateGroup
-};
-jayq.core.__GT_selector = function(a) {
-  return cljs.core.truth_(cljs.core.string_QMARK_.call(null, a)) ? a : cljs.core.truth_(cljs.core.fn_QMARK_.call(null, a)) ? cljs.core.str.call(null, "[crateGroup=", jayq.core.crate_meta.call(null, a), "]") : cljs.core.truth_(cljs.core.keyword_QMARK_.call(null, a)) ? cljs.core.name.call(null, a) : cljs.core.truth_("\ufdd0'else") ? a : null
-};
-jayq.core.$ = function() {
-  var a = function(a, b) {
-    var e = cljs.core.nth.call(null, b, 0, null);
-    return cljs.core.truth_(cljs.core.not.call(null, e)) ? jQuery.call(null, jayq.core.__GT_selector.call(null, a)) : jQuery.call(null, jayq.core.__GT_selector.call(null, a), e)
-  }, b = function(b, d) {
-    var e = null;
-    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
-    return a.call(this, b, e)
-  };
-  b.cljs$lang$maxFixedArity = 1;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), b = cljs.core.rest(b);
-    return a.call(this, d, b)
-  };
-  return b
-}();
-jQuery.prototype.cljs$core$IReduce$ = !0;
-jQuery.prototype.cljs$core$IReduce$_reduce = function(a, b) {
-  return cljs.core.ci_reduce.call(null, jayq.core.coll, b, cljs.core.first.call(null, a), cljs.core.count.call(null, a))
-};
-jQuery.prototype.cljs$core$IReduce$_reduce = function(a, b, c) {
-  return cljs.core.ci_reduce.call(null, jayq.core.coll, b, c, jayq.core.i)
-};
-jQuery.prototype.cljs$core$ILookup$ = !0;
-jQuery.prototype.cljs$core$ILookup$_lookup = function() {
-  var a = null;
-  return function(a, c, d) {
-    switch(arguments.length) {
-      case 2:
-        var e = a.slice(c, c + 1);
-        return cljs.core.truth_(e) ? e : null;
-      case 3:
-        return cljs.core._nth.call(null, a, c, d)
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-jQuery.prototype.cljs$core$ISequential$ = !0;
-jQuery.prototype.cljs$core$IIndexed$ = !0;
-jQuery.prototype.cljs$core$IIndexed$_nth = function(a, b) {
-  return cljs.core.truth_(b < cljs.core.count.call(null, a)) ? a.slice(b, b + 1) : null
-};
-jQuery.prototype.cljs$core$IIndexed$_nth = function(a, b, c) {
-  return cljs.core.truth_(b < cljs.core.count.call(null, a)) ? a.slice(b, b + 1) : cljs.core.truth_(void 0 === c) ? null : c
-};
-jQuery.prototype.cljs$core$ICounted$ = !0;
-jQuery.prototype.cljs$core$ICounted$_count = function(a) {
-  return a.size()
-};
-jQuery.prototype.cljs$core$ISeq$ = !0;
-jQuery.prototype.cljs$core$ISeq$_first = function(a) {
-  return a.slice(0, 1)
-};
-jQuery.prototype.cljs$core$ISeq$_rest = function(a) {
-  return cljs.core.truth_(1 < cljs.core.count.call(null, a)) ? a.slice(1) : cljs.core.list.call(null)
-};
-jQuery.prototype.cljs$core$ISeqable$ = !0;
-jQuery.prototype.cljs$core$ISeqable$_seq = function(a) {
-  return cljs.core.truth_(a.get(0)) ? a : null
-};
-jQuery.prototype.call = function() {
-  var a = null;
-  return function(a, c, d) {
-    switch(arguments.length) {
-      case 2:
-        return cljs.core._lookup.call(null, this, c);
-      case 3:
-        return cljs.core._lookup.call(null, this, c, d)
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-jayq.core.anim = function(a, b, c) {
-  return a.animate(jayq.util.map__GT_js.call(null, b), c)
-};
-jayq.core.text = function(a, b) {
-  return a.text(b)
-};
-jayq.core.css = function(a, b) {
-  return cljs.core.truth_(cljs.core.keyword_QMARK_.call(null, b)) ? a.css(cljs.core.name.call(null, b)) : a.css(jayq.util.map__GT_js.call(null, b))
-};
-jayq.core.attr = function() {
-  var a = function(a, b, e) {
-    e = cljs.core.nth.call(null, e, 0, null);
-    b = cljs.core.name.call(null, b);
-    return cljs.core.truth_(cljs.core.not.call(null, e)) ? a.attr(b) : a.attr(b, e)
-  }, b = function(b, d, e) {
-    var f = null;
-    goog.isDef(e) && (f = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0));
-    return a.call(this, b, d, f)
-  };
-  b.cljs$lang$maxFixedArity = 2;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), e = cljs.core.first(cljs.core.next(b)), b = cljs.core.rest(cljs.core.next(b));
-    return a.call(this, d, e, b)
-  };
-  return b
-}();
-jayq.core.data = function() {
-  var a = function(a, b, e) {
-    e = cljs.core.nth.call(null, e, 0, null);
-    b = cljs.core.name.call(null, b);
-    return cljs.core.truth_(cljs.core.not.call(null, e)) ? a.data(b) : a.data(b, e)
-  }, b = function(b, d, e) {
-    var f = null;
-    goog.isDef(e) && (f = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0));
-    return a.call(this, b, d, f)
-  };
-  b.cljs$lang$maxFixedArity = 2;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), e = cljs.core.first(cljs.core.next(b)), b = cljs.core.rest(cljs.core.next(b));
-    return a.call(this, d, e, b)
-  };
-  return b
-}();
-jayq.core.add_class = function(a, b) {
-  var c = cljs.core.name.call(null, b);
-  return a.addClass(c)
-};
-jayq.core.remove_class = function(a, b) {
-  var c = cljs.core.name.call(null, b);
-  return a.removeClass(c)
-};
-jayq.core.append = function(a, b) {
-  return a.append(b)
-};
-jayq.core.prepend = function(a, b) {
-  return a.prepend(b)
-};
-jayq.core.remove = function(a) {
-  return a.remove()
-};
-jayq.core.hide = function() {
-  var a = function(a, b) {
-    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
-    return a.hide(e, f)
-  }, b = function(b, d) {
-    var e = null;
-    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
-    return a.call(this, b, e)
-  };
-  b.cljs$lang$maxFixedArity = 1;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), b = cljs.core.rest(b);
-    return a.call(this, d, b)
-  };
-  return b
-}();
-jayq.core.show = function() {
-  var a = function(a, b) {
-    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
-    return a.show(e, f)
-  }, b = function(b, d) {
-    var e = null;
-    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
-    return a.call(this, b, e)
-  };
-  b.cljs$lang$maxFixedArity = 1;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), b = cljs.core.rest(b);
-    return a.call(this, d, b)
-  };
-  return b
-}();
-jayq.core.fade_out = function() {
-  var a = function(a, b) {
-    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
-    return a.fadeOut(e, f)
-  }, b = function(b, d) {
-    var e = null;
-    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
-    return a.call(this, b, e)
-  };
-  b.cljs$lang$maxFixedArity = 1;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), b = cljs.core.rest(b);
-    return a.call(this, d, b)
-  };
-  return b
-}();
-jayq.core.fade_in = function() {
-  var a = function(a, b) {
-    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
-    return a.fadeIn(e, f)
-  }, b = function(b, d) {
-    var e = null;
-    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
-    return a.call(this, b, e)
-  };
-  b.cljs$lang$maxFixedArity = 1;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), b = cljs.core.rest(b);
-    return a.call(this, d, b)
-  };
-  return b
-}();
-jayq.core.slide_up = function() {
-  var a = function(a, b) {
-    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
-    return a.slideUp(e, f)
-  }, b = function(b, d) {
-    var e = null;
-    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
-    return a.call(this, b, e)
-  };
-  b.cljs$lang$maxFixedArity = 1;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), b = cljs.core.rest(b);
-    return a.call(this, d, b)
-  };
-  return b
-}();
-jayq.core.slide_down = function() {
-  var a = function(a, b) {
-    var e = cljs.core.nth.call(null, b, 0, null), f = cljs.core.nth.call(null, b, 1, null);
-    return a.slideDown(e, f)
-  }, b = function(b, d) {
-    var e = null;
-    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
-    return a.call(this, b, e)
-  };
-  b.cljs$lang$maxFixedArity = 1;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), b = cljs.core.rest(b);
-    return a.call(this, d, b)
-  };
-  return b
-}();
-jayq.core.bind = function(a, b, c) {
-  return a.bind(cljs.core.name.call(null, b), c)
-};
-jayq.core.find = function(a, b) {
-  return a.find(cljs.core.name.call(null, b))
-};
-jayq.core.trigger = function(a, b) {
-  return a.trigger(cljs.core.name.call(null, b))
-};
-jayq.core.delegate = function(a, b, c, d) {
-  return a.delegate(jayq.core.__GT_selector.call(null, b), cljs.core.name.call(null, c), d)
-};
-jayq.core.inner = function(a, b) {
-  return a.html(b)
-};
-jayq.core.empty = function(a) {
-  return a.empty()
-};
-jayq.core.val = function() {
-  var a = function(a, b) {
-    var e = cljs.core.nth.call(null, b, 0, null);
-    return cljs.core.truth_(e) ? a.val(e) : a.val()
-  }, b = function(b, d) {
-    var e = null;
-    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
-    return a.call(this, b, e)
-  };
-  b.cljs$lang$maxFixedArity = 1;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), b = cljs.core.rest(b);
-    return a.call(this, d, b)
-  };
-  return b
-}();
-jayq.core.queue = function(a, b) {
-  return a.queue(b)
-};
-jayq.core.dequeue = function(a) {
-  return jayq.core.$.call(null, a).dequeue()
-};
-jayq.core.xhr = function(a, b, c) {
-  var d = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null), b = jayq.util.map__GT_js.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'type", "\ufdd0'data", "\ufdd0'success"], {"\ufdd0'type":clojure.string.upper_case.call(null, cljs.core.name.call(null, d)), "\ufdd0'data":jayq.util.map__GT_js.call(null, b), "\ufdd0'success":c}));
-  return jQuery.ajax(a, b)
-};
 clojure.browser.repl = {};
 clojure.browser.repl.xpc_connection = cljs.core.atom.call(null, null);
 clojure.browser.repl.repl_print = function(a) {
@@ -13757,7 +13757,7 @@ eastercalc.core.clear_form = function() {
 eastercalc.core.bind_clear_form = function() {
   return jayq.core.bind.call(null, jayq.core.$.call(null, "#clear-form"), "click", eastercalc.core.clear_form)
 };
-var group__15033__auto____113395 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+var group__3091__auto____34144 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.dates_for_years_table = function(a, b) {
   var c = crate.core.html.call(null, cljs.core.truth_(b) ? cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span5"}), cljs.core.Vector.fromArray(["\ufdd0'h3", a]), cljs.core.Vector.fromArray(["\ufdd0'table", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"table table-striped table-bordered"}), cljs.core.Vector.fromArray(["\ufdd0'thead", cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'th", "Year"]), 
   cljs.core.Vector.fromArray(["\ufdd0'th", "Date"])])]), cljs.core.Vector.fromArray(["\ufdd0'tbody", function() {
@@ -13773,30 +13773,61 @@ eastercalc.core.dates_for_years_table = function(a, b) {
       })
     }.call(null, b)
   }()])])]) : cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span6"})]));
-  c.setAttribute("crateGroup", group__15033__auto____113395);
+  c.setAttribute("crateGroup", group__3091__auto____34144);
   return c
 };
-eastercalc.core.dates_for_years_table.prototype._crateGroup = group__15033__auto____113395;
-var group__15033__auto____113402 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+eastercalc.core.dates_for_years_table.prototype._crateGroup = group__3091__auto____34144;
+var group__3091__auto____34151 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+eastercalc.core.years_for_dates_table = function(a, b) {
+  var c = crate.core.html.call(null, cljs.core.truth_(b) ? cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span5"}), cljs.core.Vector.fromArray(["\ufdd0'h3", a]), cljs.core.Vector.fromArray(["\ufdd0'table", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"table table-striped table-bordered"}), cljs.core.Vector.fromArray(["\ufdd0'thead", cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'th", "Date"]), 
+  cljs.core.Vector.fromArray(["\ufdd0'th", "Years"])])]), cljs.core.Vector.fromArray(["\ufdd0'tbody", function() {
+    return function e(a) {
+      return new cljs.core.LazySeq(null, !1, function() {
+        for(;;) {
+          if(cljs.core.truth_(cljs.core.seq.call(null, a))) {
+            var b = cljs.core.first.call(null, a), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null);
+            return cljs.core.cons.call(null, cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'td", cljs.core.str.call(null, c)]), cljs.core.Vector.fromArray(["\ufdd0'td", clojure.string.join.call(null, ", ", b)])]), e.call(null, cljs.core.rest.call(null, a)))
+          }
+          return null
+        }
+      })
+    }.call(null, cljs.core.js__GT_clj.call(null, b))
+  }()])])]) : cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span6"})]));
+  c.setAttribute("crateGroup", group__3091__auto____34151);
+  return c
+};
+eastercalc.core.years_for_dates_table.prototype._crateGroup = group__3091__auto____34151;
+var group__3091__auto____34161 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.disclaimer = function(a) {
   a = crate.core.html.call(null, cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span12"}), cljs.core.Vector.fromArray(["\ufdd0'span", cljs.core.Vector.fromArray(["\ufdd0'em", a])])]));
-  a.setAttribute("crateGroup", group__15033__auto____113402);
+  a.setAttribute("crateGroup", group__3091__auto____34161);
   return a
 };
-eastercalc.core.disclaimer.prototype._crateGroup = group__15033__auto____113402;
+eastercalc.core.disclaimer.prototype._crateGroup = group__3091__auto____34161;
 eastercalc.core.submit_dates_for_years = function() {
   var a = jayq.core.$.call(null, "#eastern").is(":checked"), b = jayq.core.$.call(null, "#western").is(":checked"), c = jayq.core.val.call(null, jayq.core.$.call(null, "#year-start")), d = jayq.core.val.call(null, jayq.core.$.call(null, "#year-end"));
   return jQuery.ajax(eastercalc.core.clj__GT_js.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'url", "\ufdd0'dataType", "\ufdd0'data", "\ufdd0'success", "\ufdd0'error"], {"\ufdd0'url":"/data/dates-for-years", "\ufdd0'dataType":"json", "\ufdd0'data":cljs.core.ObjMap.fromObject(["\ufdd0'eastern", "\ufdd0'western", "\ufdd0'year-start", "\ufdd0'year-end"], {"\ufdd0'eastern":a, "\ufdd0'western":b, "\ufdd0'year-start":c, "\ufdd0'year-end":d}), "\ufdd0'success":function(a) {
-    window.mydata = a;
     return jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.inner.call(null, jayq.core.$.call(null, "\ufdd0'#results"), ""), eastercalc.core.disclaimer.call(null, a.disclaimer)), eastercalc.core.dates_for_years_table.call(null, "Orthodox Pascha", a.eastern)), eastercalc.core.dates_for_years_table.call(null, "Western Easter", a.western))
   }, "\ufdd0'error":function(a) {
     return console.log(cljs.core.str.call(null, "An error occurred: ", a))
   }})))
 };
+eastercalc.core.submit_years_for_dates = function() {
+  var a = jayq.core.$.call(null, "#eastern").is(":checked"), b = jayq.core.$.call(null, "#western").is(":checked"), c = jayq.core.val.call(null, jayq.core.$.call(null, "#year-start")), d = jayq.core.val.call(null, jayq.core.$.call(null, "#year-end"));
+  return jQuery.ajax(eastercalc.core.clj__GT_js.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'url", "\ufdd0'dataType", "\ufdd0'data", "\ufdd0'success", "\ufdd0'error"], {"\ufdd0'url":"/data/years-for-dates", "\ufdd0'dataType":"json", "\ufdd0'data":cljs.core.ObjMap.fromObject(["\ufdd0'eastern", "\ufdd0'western", "\ufdd0'year-start", "\ufdd0'year-end"], {"\ufdd0'eastern":a, "\ufdd0'western":b, "\ufdd0'year-start":c, "\ufdd0'year-end":d}), "\ufdd0'success":function(a) {
+    return jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.inner.call(null, jayq.core.$.call(null, "\ufdd0'#results"), ""), eastercalc.core.disclaimer.call(null, a.disclaimer)), eastercalc.core.years_for_dates_table.call(null, "Orthodox Pascha", a.eastern)), eastercalc.core.years_for_dates_table.call(null, "Western Easter", a.western))
+  }, "\ufdd0'error":function(a) {
+    return console.log(cljs.core.str.call(null, "An error occurred: ", a))
+  }})))
+};
 eastercalc.core.bind_submit_dates_for_years = function() {
-  return jayq.core.bind.call(null, jayq.core.$.call(null, "#submit-form"), "click", eastercalc.core.submit_dates_for_years)
+  return jayq.core.bind.call(null, jayq.core.$.call(null, "#submit-dates-for-years"), "click", eastercalc.core.submit_dates_for_years)
+};
+eastercalc.core.bind_submit_years_for_dates = function() {
+  return jayq.core.bind.call(null, jayq.core.$.call(null, "#submit-years-for-dates"), "click", eastercalc.core.submit_years_for_dates)
 };
 eastercalc.live = {};
 eastercalc.core.enable_tooltips.call(null);
 eastercalc.core.bind_clear_form.call(null);
 eastercalc.core.bind_submit_dates_for_years.call(null);
+eastercalc.core.bind_submit_years_for_dates.call(null);
