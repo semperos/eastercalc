@@ -7,10 +7,10 @@
 (defn -main [& args]
   (let [[options args banner] (cli args
                                    ["-e" "--environment" "Options: dev, prod" :default "dev"]
-                                   ["-p" "--port" "Application port" :default 8888 :parse-fn #(Integer. %)]
+                                   ["-p" "--port" "Application port" :default (get (System/getenv) "PORT" 8888) :parse-fn #(Integer. %)]
                                    ["-h" "--help" "Show help" :default false :flag true])
         mode (keyword (:environment options))
-        port (:port options)]
+        port (Integer. (:port options))]
     (when (:help options)
       (println banner)
       (System/exit 0))
