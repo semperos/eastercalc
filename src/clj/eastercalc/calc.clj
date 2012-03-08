@@ -1,6 +1,6 @@
 (ns eastercalc.calc
   (:require [clj-time.core :as dt])
-  (:import [org.joda.time DateTime DateTimeZone]
+  (:import [org.joda.time DateTime DateTimeZone Days]
            [org.joda.time.chrono ISOChronology JulianChronology]))
 
 (defn pascha-gauss
@@ -22,7 +22,6 @@
            julian-date (dt/plus julian-march-21 (dt/days rc))]
        (case chrono
          :julian julian-date
-
          :gregorian (.withChronology julian-date (ISOChronology/getInstance))
          :iso (.withChronology julian-date (ISOChronology/getInstance))))))
 
@@ -63,3 +62,4 @@
     (dt/date-time year month day)))
 
 (def easter easter-nature)
+
