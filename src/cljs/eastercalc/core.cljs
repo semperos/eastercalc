@@ -1,6 +1,7 @@
 (ns eastercalc.core
   (:use [jayq.core :only [$ bind attr val append inner]])
-  (:require [crate.core :as crate])
+  (:require [crate.core :as crate]
+            [clojure.string :as string])
   (:use-macros [crate.macros :only [defpartial]]))
 
 ;; Utilities
@@ -52,6 +53,22 @@
           [:td (str (.-date entry))]])]]]
     [:div {:class "span6"}]))
 
+(defpartial years-for-dates-table [title seq-of-maps]
+  (if seq-of-maps
+    [:div {:class "span5"}
+     [:h3 title]
+     [:table {:class "table table-striped table-bordered"}
+      [:thead
+       [:tr
+        [:th "Date"]
+        [:th "Years"]]]
+      [:tbody
+       (for [[k v] (js->clj seq-of-maps)]
+         [:tr
+          [:td (str k)]
+          [:td (string/join ", " v)]])]]]
+    [:div {:class "span6"}]))
+
 (defpartial disclaimer [s]
   [:div {:class "span12"}
    [:span
@@ -71,7 +88,6 @@
                             :year-start year-start
                             :year-end year-end}
                      :success (fn [data]
-                                (set! (.-mydata js/window) data)
                                 (-> ($ :#results)
                                     (inner "")
                                     (append (disclaimer (.-disclaimer data)))
@@ -79,7 +95,33 @@
                                     (append (dates-for-years-table "Western Easter" (.-western data)))))
                      :error (fn [e] (. js/console log (str "An error occurred: " e)))}))))
 
+(defn submit-years-for-dates
+  []
+  (let [eastern (.is ($ "#eastern") ":checked")
+        western (.is ($ "#western") ":checked")
+        year-start (val ($ "#year-start"))
+        year-end (val ($ "#year-end"))]
+    (.ajax js/jQuery
+           (clj->js {:url "/data/years-for-dates"
+                     :dataType "json"
+                     :data {:eastern eastern
+                            :western western
+                            :year-start year-start
+                            :year-end year-end}
+                     :success (fn [data]
+                                (-> ($ :#results)
+                                    (inner "")
+                                    (append (disclaimer (.-disclaimer data)))
+                                    (append (years-for-dates-table "Orthodox Pascha" (.-eastern data)))
+                                    (append (years-for-dates-table "Western Easter" (.-western data)))))
+                     :error (fn [e] (. js/console log (str "An error occurred: " e)))}))))
+
 (defn bind-submit-dates-for-years
   []
-  (-> ($ "#submit-form")
+  (-> ($ "#submit-dates-for-years")
       (bind "click" submit-dates-for-years)))
+
+(defn bind-submit-years-for-dates
+  []
+  (-> ($ "#submit-years-for-dates")
+      (bind "click" submit-years-for-dates)))

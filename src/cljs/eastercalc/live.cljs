@@ -5,3 +5,4 @@
 (core/enable-tooltips)
 (core/bind-clear-form)
 (core/bind-submit-dates-for-years)
+(core/bind-submit-years-for-dates)
