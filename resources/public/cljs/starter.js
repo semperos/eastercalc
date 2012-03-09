@@ -14146,7 +14146,7 @@ eastercalc.core.clear_form = function() {
 eastercalc.core.bind_clear_form = function() {
   return jayq.core.bind.call(null, jayq.core.$.call(null, "#clear-form"), "click", eastercalc.core.clear_form)
 };
-var group__3115__auto____11868 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+var group__3115__auto____86158 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.dates_for_years_table = function(a, b) {
   var c = crate.core.html.call(null, cljs.core.truth_(b) ? cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span5"}), cljs.core.Vector.fromArray(["\ufdd0'h3", a]), cljs.core.Vector.fromArray(["\ufdd0'table", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"table table-striped table-bordered"}), cljs.core.Vector.fromArray(["\ufdd0'thead", cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'th", "Year"]), 
   cljs.core.Vector.fromArray(["\ufdd0'th", "Date"])])]), cljs.core.Vector.fromArray(["\ufdd0'tbody", function() {
@@ -14162,11 +14162,11 @@ eastercalc.core.dates_for_years_table = function(a, b) {
       })
     }.call(null, b)
   }()])])]) : cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span6"})]));
-  c.setAttribute("crateGroup", group__3115__auto____11868);
+  c.setAttribute("crateGroup", group__3115__auto____86158);
   return c
 };
-eastercalc.core.dates_for_years_table.prototype._crateGroup = group__3115__auto____11868;
-var group__3115__auto____11875 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+eastercalc.core.dates_for_years_table.prototype._crateGroup = group__3115__auto____86158;
+var group__3115__auto____86165 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.years_for_dates_table = function(a, b) {
   var c = crate.core.html.call(null, cljs.core.truth_(b) ? cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span5"}), cljs.core.Vector.fromArray(["\ufdd0'h3", a]), cljs.core.Vector.fromArray(["\ufdd0'table", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"table table-striped table-bordered"}), cljs.core.Vector.fromArray(["\ufdd0'thead", cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'th", "Date"]), 
   cljs.core.Vector.fromArray(["\ufdd0'th", "Years"])])]), cljs.core.Vector.fromArray(["\ufdd0'tbody", function() {
@@ -14180,40 +14180,53 @@ eastercalc.core.years_for_dates_table = function(a, b) {
           return null
         }
       })
-    }.call(null, cljs.core.js__GT_clj.call(null, b))
+    }.call(null, b)
   }()])])]) : cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span6"})]));
-  c.setAttribute("crateGroup", group__3115__auto____11875);
+  c.setAttribute("crateGroup", group__3115__auto____86165);
   return c
 };
-eastercalc.core.years_for_dates_table.prototype._crateGroup = group__3115__auto____11875;
-var group__3115__auto____11882 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+eastercalc.core.years_for_dates_table.prototype._crateGroup = group__3115__auto____86165;
+var group__3115__auto____86172 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.disclaimer = function(a) {
   a = crate.core.html.call(null, cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span12"}), cljs.core.Vector.fromArray(["\ufdd0'span", cljs.core.Vector.fromArray(["\ufdd0'em", a])])]));
-  a.setAttribute("crateGroup", group__3115__auto____11882);
+  a.setAttribute("crateGroup", group__3115__auto____86172);
   return a
 };
-eastercalc.core.disclaimer.prototype._crateGroup = group__3115__auto____11882;
+eastercalc.core.disclaimer.prototype._crateGroup = group__3115__auto____86172;
 eastercalc.core.submit_dates_for_years = function() {
-  var a = jayq.core.$.call(null, "#eastern").is(":checked"), b = jayq.core.$.call(null, "#western").is(":checked"), c = jayq.core.val.call(null, jayq.core.$.call(null, "#year-start")), d = jayq.core.val.call(null, jayq.core.$.call(null, "#year-end"));
+  var a = jayq.core.$.call(null, "#eastern").is(":checked"), b = jayq.core.$.call(null, "#western").is(":checked"), c = jayq.core.val.call(null, jayq.core.$.call(null, "#year-start-dates")), d = jayq.core.val.call(null, jayq.core.$.call(null, "#year-end-dates"));
   return fetch.remotes.remote_callback.call(null, "dates-for-years", cljs.core.Vector.fromArray([cljs.core.ObjMap.fromObject(["\ufdd0'eastern", "\ufdd0'western", "\ufdd0'year-start", "\ufdd0'year-end"], {"\ufdd0'eastern":a, "\ufdd0'western":b, "\ufdd0'year-start":c, "\ufdd0'year-end":d})]), function(a) {
     return jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.inner.call(null, jayq.core.$.call(null, "\ufdd0'#results"), ""), eastercalc.core.disclaimer.call(null, a.call(null, "disclaimer"))), eastercalc.core.dates_for_years_table.call(null, "Orthodox Pascha", a.call(null, "eastern"))), eastercalc.core.dates_for_years_table.call(null, "Western Easter", a.call(null, "western")))
   })
 };
 eastercalc.core.submit_years_for_dates = function() {
-  var a = jayq.core.$.call(null, "#eastern").is(":checked"), b = jayq.core.$.call(null, "#western").is(":checked"), c = jayq.core.val.call(null, jayq.core.$.call(null, "#year-start")), d = jayq.core.val.call(null, jayq.core.$.call(null, "#year-end"));
-  return jQuery.ajax(eastercalc.util.clj__GT_js.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'url", "\ufdd0'dataType", "\ufdd0'data", "\ufdd0'success", "\ufdd0'error"], {"\ufdd0'url":"/data/years-for-dates", "\ufdd0'dataType":"json", "\ufdd0'data":cljs.core.ObjMap.fromObject(["\ufdd0'eastern", "\ufdd0'western", "\ufdd0'year-start", "\ufdd0'year-end"], {"\ufdd0'eastern":a, "\ufdd0'western":b, "\ufdd0'year-start":c, "\ufdd0'year-end":d}), "\ufdd0'success":function(a) {
-    return jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.inner.call(null, jayq.core.$.call(null, "\ufdd0'#results"), ""), eastercalc.core.disclaimer.call(null, a.disclaimer)), eastercalc.core.years_for_dates_table.call(null, "Orthodox Pascha", a.eastern)), eastercalc.core.years_for_dates_table.call(null, "Western Easter", a.western))
-  }, "\ufdd0'error":function(a) {
-    return console.log(cljs.core.str.call(null, "An error occurred: ", a))
-  }})))
+  var a = jayq.core.$.call(null, "#eastern").is(":checked"), b = jayq.core.$.call(null, "#western").is(":checked"), c = jayq.core.val.call(null, jayq.core.$.call(null, "#year-start-years")), d = jayq.core.val.call(null, jayq.core.$.call(null, "#year-end-years"));
+  return fetch.remotes.remote_callback.call(null, "years-for-dates", cljs.core.Vector.fromArray([cljs.core.ObjMap.fromObject(["\ufdd0'eastern", "\ufdd0'western", "\ufdd0'year-start", "\ufdd0'year-end"], {"\ufdd0'eastern":a, "\ufdd0'western":b, "\ufdd0'year-start":c, "\ufdd0'year-end":d})]), function(a) {
+    console.log(cljs.core.ffirst.call(null, a.call(null, "eastern")));
+    console.log(cljs.core.second.call(null, cljs.core.first.call(null, a.call(null, "eastern"))));
+    return jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.inner.call(null, jayq.core.$.call(null, "\ufdd0'#results"), ""), eastercalc.core.disclaimer.call(null, a.call(null, "disclaimer"))), eastercalc.core.years_for_dates_table.call(null, "Orthodox Pascha", a.call(null, "eastern"))), eastercalc.core.years_for_dates_table.call(null, "Western Easter", a.call(null, "western")))
+  })
 };
 eastercalc.core.bind_submit_dates_for_years = function() {
-  return jayq.core.bind.call(null, jayq.core.$.call(null, "#submit-dates-for-years"), "click", eastercalc.core.submit_dates_for_years)
+  jayq.core.bind.call(null, jayq.core.$.call(null, "#submit-dates-for-years"), "click", eastercalc.core.submit_dates_for_years);
+  jayq.core.bind.call(null, jayq.core.$.call(null, "#year-start-dates"), "keypress", function(a) {
+    return cljs.core.truth_(cljs.core._EQ_.call(null, a.keyCode, 13)) ? eastercalc.core.submit_dates_for_years.call(null) : null
+  });
+  return jayq.core.bind.call(null, jayq.core.$.call(null, "#year-end-dates"), "keypress", function(a) {
+    return cljs.core.truth_(cljs.core._EQ_.call(null, a.keyCode, 13)) ? eastercalc.core.submit_dates_for_years.call(null) : null
+  })
 };
 eastercalc.core.bind_submit_years_for_dates = function() {
-  return jayq.core.bind.call(null, jayq.core.$.call(null, "#submit-years-for-dates"), "click", eastercalc.core.submit_years_for_dates)
+  jayq.core.bind.call(null, jayq.core.$.call(null, "#submit-years-for-dates"), "click", eastercalc.core.submit_years_for_dates);
+  jayq.core.bind.call(null, jayq.core.$.call(null, "#year-start-years"), "keypress", function(a) {
+    return cljs.core.truth_(cljs.core._EQ_.call(null, a.keyCode, 13)) ? eastercalc.core.submit_years_for_dates.call(null) : null
+  });
+  return jayq.core.bind.call(null, jayq.core.$.call(null, "#year-end-years"), "keypress", function(a) {
+    return cljs.core.truth_(cljs.core._EQ_.call(null, a.keyCode, 13)) ? eastercalc.core.submit_years_for_dates.call(null) : null
+  })
 };
 eastercalc.live = {};
 eastercalc.core.enable_tooltips.call(null);
 eastercalc.core.bind_clear_form.call(null);
 eastercalc.core.bind_submit_dates_for_years.call(null);
+eastercalc.core.bind_submit_years_for_dates.call(null);
