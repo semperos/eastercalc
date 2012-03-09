@@ -13757,7 +13757,7 @@ eastercalc.core.clear_form = function() {
 eastercalc.core.bind_clear_form = function() {
   return jayq.core.bind.call(null, jayq.core.$.call(null, "#clear-form"), "click", eastercalc.core.clear_form)
 };
-var group__3091__auto____34144 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+var group__3091__auto____23738 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.dates_for_years_table = function(a, b) {
   var c = crate.core.html.call(null, cljs.core.truth_(b) ? cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span5"}), cljs.core.Vector.fromArray(["\ufdd0'h3", a]), cljs.core.Vector.fromArray(["\ufdd0'table", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"table table-striped table-bordered"}), cljs.core.Vector.fromArray(["\ufdd0'thead", cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'th", "Year"]), 
   cljs.core.Vector.fromArray(["\ufdd0'th", "Date"])])]), cljs.core.Vector.fromArray(["\ufdd0'tbody", function() {
@@ -13773,11 +13773,11 @@ eastercalc.core.dates_for_years_table = function(a, b) {
       })
     }.call(null, b)
   }()])])]) : cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span6"})]));
-  c.setAttribute("crateGroup", group__3091__auto____34144);
+  c.setAttribute("crateGroup", group__3091__auto____23738);
   return c
 };
-eastercalc.core.dates_for_years_table.prototype._crateGroup = group__3091__auto____34144;
-var group__3091__auto____34151 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+eastercalc.core.dates_for_years_table.prototype._crateGroup = group__3091__auto____23738;
+var group__3091__auto____23745 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.years_for_dates_table = function(a, b) {
   var c = crate.core.html.call(null, cljs.core.truth_(b) ? cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span5"}), cljs.core.Vector.fromArray(["\ufdd0'h3", a]), cljs.core.Vector.fromArray(["\ufdd0'table", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"table table-striped table-bordered"}), cljs.core.Vector.fromArray(["\ufdd0'thead", cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'th", "Date"]), 
   cljs.core.Vector.fromArray(["\ufdd0'th", "Years"])])]), cljs.core.Vector.fromArray(["\ufdd0'tbody", function() {
@@ -13785,25 +13785,25 @@ eastercalc.core.years_for_dates_table = function(a, b) {
       return new cljs.core.LazySeq(null, !1, function() {
         for(;;) {
           if(cljs.core.truth_(cljs.core.seq.call(null, a))) {
-            var b = cljs.core.first.call(null, a), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null);
-            return cljs.core.cons.call(null, cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'td", cljs.core.str.call(null, c)]), cljs.core.Vector.fromArray(["\ufdd0'td", clojure.string.join.call(null, ", ", b)])]), e.call(null, cljs.core.rest.call(null, a)))
+            var b = cljs.core.first.call(null, a);
+            return cljs.core.cons.call(null, cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'td", cljs.core.first.call(null, b)]), cljs.core.Vector.fromArray(["\ufdd0'td", clojure.string.join.call(null, ", ", cljs.core.second.call(null, b))])]), e.call(null, cljs.core.rest.call(null, a)))
           }
           return null
         }
       })
     }.call(null, cljs.core.js__GT_clj.call(null, b))
   }()])])]) : cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span6"})]));
-  c.setAttribute("crateGroup", group__3091__auto____34151);
+  c.setAttribute("crateGroup", group__3091__auto____23745);
   return c
 };
-eastercalc.core.years_for_dates_table.prototype._crateGroup = group__3091__auto____34151;
-var group__3091__auto____34161 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+eastercalc.core.years_for_dates_table.prototype._crateGroup = group__3091__auto____23745;
+var group__3091__auto____23752 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.disclaimer = function(a) {
   a = crate.core.html.call(null, cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span12"}), cljs.core.Vector.fromArray(["\ufdd0'span", cljs.core.Vector.fromArray(["\ufdd0'em", a])])]));
-  a.setAttribute("crateGroup", group__3091__auto____34161);
+  a.setAttribute("crateGroup", group__3091__auto____23752);
   return a
 };
-eastercalc.core.disclaimer.prototype._crateGroup = group__3091__auto____34161;
+eastercalc.core.disclaimer.prototype._crateGroup = group__3091__auto____23752;
 eastercalc.core.submit_dates_for_years = function() {
   var a = jayq.core.$.call(null, "#eastern").is(":checked"), b = jayq.core.$.call(null, "#western").is(":checked"), c = jayq.core.val.call(null, jayq.core.$.call(null, "#year-start")), d = jayq.core.val.call(null, jayq.core.$.call(null, "#year-end"));
   return jQuery.ajax(eastercalc.core.clj__GT_js.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'url", "\ufdd0'dataType", "\ufdd0'data", "\ufdd0'success", "\ufdd0'error"], {"\ufdd0'url":"/data/dates-for-years", "\ufdd0'dataType":"json", "\ufdd0'data":cljs.core.ObjMap.fromObject(["\ufdd0'eastern", "\ufdd0'western", "\ufdd0'year-start", "\ufdd0'year-end"], {"\ufdd0'eastern":a, "\ufdd0'western":b, "\ufdd0'year-start":c, "\ufdd0'year-end":d}), "\ufdd0'success":function(a) {
