@@ -63,10 +63,10 @@
         [:th "Date"]
         [:th "Years"]]]
       [:tbody
-       (for [[k v] (js->clj seq-of-maps)]
+       (for [item (js->clj seq-of-maps)]
          [:tr
-          [:td (str k)]
-          [:td (string/join ", " v)]])]]]
+          [:td (first item)]
+          [:td (string/join ", " (second item))]])]]]
     [:div {:class "span6"}]))
 
 (defpartial disclaimer [s]
