@@ -35,12 +35,12 @@
     [:fieldset {:class "span4"}
      [:div {:class "control-group"}
       [:label {:class "control-label"
-               :for "year-start"}
+               :for "year-start-dates"}
        "Start Year"]
       [:div {:class "controls"}
        [:input {:type "text"
                 :class "span1"
-                :id "year-start"
+                :id "year-start-dates"
                 :value (dt/year (dt/now))}]
        
        [:span {:class "help-inline"}
@@ -48,12 +48,12 @@
                   [:i {:class "icon-question-sign"}])]]]
      [:div {:class "control-group"}
       [:label {:class "control-label"
-               :for "year-end"}
+               :for "year-end-dates"}
        "End Year"]
       [:div {:class "controls"}
        [:input {:type "text"
                 :class "span1"
-                :id "year-end"
+                :id "year-end-dates"
                 :value (dt/year (dt/plus (dt/now) (dt/years 1)))}]
        [:span {:class "help-inline"}
         (help-tip {:title "Four-digit year, inclusive." :id "year-end-tip"}
@@ -91,24 +91,24 @@
     [:fieldset {:class "span4"}
      [:div {:class "control-group"}
       [:label {:class "control-label"
-               :for "year-start"}
+               :for "year-start-years"}
        "Start Year"]
       [:div {:class "controls"}
        [:input {:type "text"
                 :class "span1"
-                :id "year-start"
+                :id "year-start-years"
                 :value (dt/year (dt/now))}]
        [:span {:class "help-inline"}
         (help-tip {:title "Four-digit year, inclusive." :id "year-start-tip"}
                   [:i {:class "icon-question-sign"}])]]]
      [:div {:class "control-group"}
       [:label {:class "control-label"
-               :for "year-end"}
+               :for "year-end-years"}
        "End Year"]
       [:div {:class "controls"}
        [:input {:type "text"
                 :class "span1"
-                :id "year-end"
+                :id "year-end-years"
                 :value (dt/year (dt/plus (dt/now) (dt/years 1)))}]
        [:span {:class "help-inline"}
         (help-tip {:title "Four-digit year, inclusive." :id "year-end-tip"}
