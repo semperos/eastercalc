@@ -3,6 +3,7 @@
             :dependencies [[org.clojure/clojure "1.3.0"]
                            [org.clojure/tools.cli "0.2.1"]
                            [cheshire "2.2.0"]
+                           [fetch "0.1.0-alpha1"]
                            [clj-time "0.3.7"]
                            [jayq "0.1.0-alpha1"]
                            [crate "0.1.0-alpha1"]
