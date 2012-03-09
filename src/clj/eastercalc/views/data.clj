@@ -34,14 +34,12 @@
     {:headers {"Content-Type" "application/json"}
      :body (encode {:disclaimer "All dates displayed according to the Gregorian calendar."
                     :eastern (when-not (= eastern "false")
-                                (into (sorted-map)
-                                      (group-by (fn [year]
+                                (sort (group-by (fn [year]
                                                   (let [date (pascha year)]
                                                     (str (.getMonthOfYear date) "/" (.getDayOfMonth date))))
                                                 years)))
                     :western (when-not (= western "false")
-                                (into (sorted-map)
-                                      (group-by (fn [year]
-                                                  (let [date (easter year)]
-                                                    (str (.getMonthOfYear date) "/" (.getDayOfMonth date))))
-                                                years)))})}))
+                               (sort (group-by (fn [year]
+                                                 (let [date (easter year)]
+                                                   (str (.getMonthOfYear date) "/" (.getDayOfMonth date))))
+                                               years)))})}))
