@@ -1,4 +1,4 @@
-(defproject eastercalc "0.1.0-SNAPSHOT"
+(defproject eastercalc "0.1.0"
             :description "Tools for calculating Easter and Pascha."
             :dependencies [[org.clojure/clojure "1.3.0"]
                            [org.clojure/tools.cli "0.2.1"]
