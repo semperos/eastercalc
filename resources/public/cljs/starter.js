@@ -12740,6 +12740,342 @@ cljs.core.get_method = function(a, b) {
 cljs.core.prefers = function(a) {
   return cljs.core._prefers.call(null, a)
 };
+cljs.reader = {};
+cljs.reader.PushbackReader = {};
+cljs.reader.read_char = function(a) {
+  if(cljs.core.truth_(cljs.core.truth_(a) ? a.cljs$reader$PushbackReader$read_char : a)) {
+    a = a.cljs$reader$PushbackReader$read_char(a)
+  }else {
+    var b;
+    b = cljs.reader.read_char[goog.typeOf.call(null, a)];
+    if(!cljs.core.truth_(b) && (b = cljs.reader.read_char._, !cljs.core.truth_(b))) {
+      throw cljs.core.missing_protocol.call(null, "PushbackReader.read-char", a);
+    }
+    a = b.call(null, a)
+  }
+  return a
+};
+cljs.reader.unread = function(a, b) {
+  var c;
+  if(cljs.core.truth_(cljs.core.truth_(a) ? a.cljs$reader$PushbackReader$unread : a)) {
+    c = a.cljs$reader$PushbackReader$unread(a, b)
+  }else {
+    c = cljs.reader.unread[goog.typeOf.call(null, a)];
+    if(!cljs.core.truth_(c) && (c = cljs.reader.unread._, !cljs.core.truth_(c))) {
+      throw cljs.core.missing_protocol.call(null, "PushbackReader.unread", a);
+    }
+    c = c.call(null, a, b)
+  }
+  return c
+};
+cljs.reader.StringPushbackReader = function(a, b, c) {
+  this.s = a;
+  this.index_atom = b;
+  this.buffer_atom = c
+};
+cljs.reader.StringPushbackReader.cljs$core$IPrintable$_pr_seq = function() {
+  return cljs.core.list.call(null, "cljs.reader.StringPushbackReader")
+};
+cljs.reader.StringPushbackReader.prototype.cljs$reader$PushbackReader$ = !0;
+cljs.reader.StringPushbackReader.prototype.cljs$reader$PushbackReader$read_char = function() {
+  if(cljs.core.truth_(cljs.core.empty_QMARK_.call(null, cljs.core.deref.call(null, this.buffer_atom)))) {
+    var a = cljs.core.deref.call(null, this.index_atom);
+    cljs.core.swap_BANG_.call(null, this.index_atom, cljs.core.inc);
+    return cljs.core.nth.call(null, this.s, a)
+  }
+  a = cljs.core.deref.call(null, this.buffer_atom);
+  cljs.core.swap_BANG_.call(null, this.buffer_atom, cljs.core.rest);
+  return cljs.core.first.call(null, a)
+};
+cljs.reader.StringPushbackReader.prototype.cljs$reader$PushbackReader$unread = function(a, b) {
+  return cljs.core.swap_BANG_.call(null, this.buffer_atom, function(a) {
+    return cljs.core.cons.call(null, b, a)
+  })
+};
+cljs.reader.push_back_reader = function(a) {
+  return new cljs.reader.StringPushbackReader(a, cljs.core.atom.call(null, 0), cljs.core.atom.call(null, null))
+};
+cljs.reader.whitespace_QMARK_ = function(a) {
+  var b = goog.string.isBreakingWhitespace.call(null, a);
+  return cljs.core.truth_(b) ? b : cljs.core._EQ_.call(null, ",", a)
+};
+cljs.reader.numeric_QMARK_ = function(a) {
+  return goog.string.isNumeric.call(null, a)
+};
+cljs.reader.comment_prefix_QMARK_ = function(a) {
+  return cljs.core._EQ_.call(null, ";", a)
+};
+cljs.reader.number_literal_QMARK_ = function(a, b) {
+  var c = cljs.reader.numeric_QMARK_.call(null, b);
+  if(cljs.core.truth_(c)) {
+    return c
+  }
+  c = function() {
+    var a = cljs.core._EQ_.call(null, "+", b);
+    return cljs.core.truth_(a) ? a : cljs.core._EQ_.call(null, "-", b)
+  }();
+  return cljs.core.truth_(c) ? cljs.reader.numeric_QMARK_.call(null, function() {
+    var b = cljs.reader.read_char.call(null, a);
+    cljs.reader.unread.call(null, a, b);
+    return b
+  }()) : c
+};
+cljs.reader.reader_error = function() {
+  var a = function(a, c) {
+    var d = null;
+    goog.isDef(c) && (d = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    throw cljs.core.apply.call(null, cljs.core.str, d);
+  };
+  a.cljs$lang$maxFixedArity = 1;
+  a.cljs$lang$applyTo = function(a) {
+    cljs.core.first(a);
+    a = cljs.core.rest(a);
+    throw cljs.core.apply.call(null, cljs.core.str, a);
+  };
+  return a
+}();
+cljs.reader.macro_terminating_QMARK_ = function(a) {
+  var b = cljs.core.not_EQ_.call(null, a, "#");
+  return cljs.core.truth_(b) && (b = cljs.core.not_EQ_.call(null, a, "'"), cljs.core.truth_(b)) ? (b = cljs.core.not_EQ_.call(null, a, ":"), cljs.core.truth_(b) ? cljs.core.contains_QMARK_.call(null, cljs.reader.macros, a) : b) : b
+};
+cljs.reader.read_token = function(a, b) {
+  for(var c = new goog.string.StringBuffer(b), d = cljs.reader.read_char.call(null, a);;) {
+    if(cljs.core.truth_(function() {
+      var a = null === d;
+      if(cljs.core.truth_(a)) {
+        return a
+      }
+      a = cljs.reader.whitespace_QMARK_.call(null, d);
+      return cljs.core.truth_(a) ? a : cljs.reader.macro_terminating_QMARK_.call(null, d)
+    }())) {
+      return cljs.reader.unread.call(null, a, d), c.toString()
+    }
+    c.append(d);
+    var e = cljs.reader.read_char.call(null, a), d = e
+  }
+};
+cljs.reader.skip_line = function(a) {
+  for(;;) {
+    var b = cljs.reader.read_char.call(null, a);
+    if(cljs.core.truth_(function() {
+      var a = cljs.core._EQ_.call(null, b, "n");
+      if(cljs.core.truth_(a)) {
+        return a
+      }
+      a = cljs.core._EQ_.call(null, b, "r");
+      return cljs.core.truth_(a) ? a : null === b
+    }())) {
+      return a
+    }
+  }
+};
+cljs.reader.int_pattern = cljs.core.re_pattern.call(null, "([-+]?)(?:(0)|([1-9][0-9]*)|0[xX]([0-9A-Fa-f]+)|0([0-7]+)|([1-9][0-9]?)[rR]([0-9A-Za-z]+)|0[0-9]+)(N)?");
+cljs.reader.ratio_pattern = cljs.core.re_pattern.call(null, "([-+]?[0-9]+)/([0-9]+)");
+cljs.reader.float_pattern = cljs.core.re_pattern.call(null, "([-+]?[0-9]+(\\.[0-9]*)?([eE][-+]?[0-9]+)?)(M)?");
+cljs.reader.symbol_pattern = cljs.core.re_pattern.call(null, "[:]?([^0-9/].*/)?([^0-9/][^/]*)");
+cljs.reader.match_int = function(a) {
+  var b = cljs.core.re_find.call(null, cljs.reader.int_pattern, a), c = cljs.core.nth.call(null, b, 2);
+  if(cljs.core.truth_(cljs.core.not.call(null, function() {
+    var a = void 0 === c;
+    return cljs.core.truth_(a) ? a : 1 > c.length
+  }()))) {
+    return 0
+  }
+  var a = cljs.core.truth_(cljs.core._EQ_.call(null, "-", cljs.core.nth.call(null, b, 1))) ? -1 : 1, d = cljs.core.truth_(cljs.core.nth.call(null, b, 3)) ? cljs.core.Vector.fromArray([cljs.core.nth.call(null, b, 3), 10]) : cljs.core.truth_(cljs.core.nth.call(null, b, 4)) ? cljs.core.Vector.fromArray([cljs.core.nth.call(null, b, 4), 16]) : cljs.core.truth_(cljs.core.nth.call(null, b, 5)) ? cljs.core.Vector.fromArray([cljs.core.nth.call(null, b, 5), 8]) : cljs.core.truth_(cljs.core.nth.call(null, b, 
+  7)) ? cljs.core.Vector.fromArray([cljs.core.nth.call(null, b, 7), parseInt.call(null, cljs.core.nth.call(null, b, 7))]) : cljs.core.truth_("\ufdd0'default") ? cljs.core.Vector.fromArray([null, null]) : null, b = cljs.core.nth.call(null, d, 0, null), d = cljs.core.nth.call(null, d, 1, null);
+  return cljs.core.truth_(null === b) ? null : a * parseInt.call(null, b, d)
+};
+cljs.reader.match_ratio = function(a) {
+  var b = cljs.core.re_find.call(null, cljs.reader.ratio_pattern, a), a = cljs.core.nth.call(null, b, 1), b = cljs.core.nth.call(null, b, 2);
+  return parseInt.call(null, a) / parseInt.call(null, b)
+};
+cljs.reader.match_float = function(a) {
+  return parseFloat.call(null, a)
+};
+cljs.reader.match_number = function(a) {
+  return cljs.core.truth_(cljs.core.re_matches.call(null, cljs.reader.int_pattern, a)) ? cljs.reader.match_int.call(null, a) : cljs.core.truth_(cljs.core.re_matches.call(null, cljs.reader.ratio_pattern, a)) ? cljs.reader.match_ratio.call(null, a) : cljs.core.truth_(cljs.core.re_matches.call(null, cljs.reader.float_pattern, a)) ? cljs.reader.match_float.call(null, a) : null
+};
+cljs.reader.escape_char_map = cljs.core.HashMap.fromArrays('t,r,n,\\,",b,f'.split(","), '\t,\r,\n,\\,",\u0008,\u000c'.split(","));
+cljs.reader.read_unicode_char = function(a) {
+  return cljs.reader.reader_error.call(null, a, "Unicode characters not supported by reader (yet)")
+};
+cljs.reader.escape_char = function(a, b) {
+  var c = cljs.reader.read_char.call(null, b), d = cljs.core.get.call(null, cljs.reader.escape_char_map, c);
+  return cljs.core.truth_(d) ? d : cljs.core.truth_(function() {
+    var a = cljs.core._EQ_.call(null, "u", c);
+    return cljs.core.truth_(a) ? a : cljs.reader.numeric_QMARK_.call(null, c)
+  }()) ? cljs.reader.read_unicode_char.call(null, b, c) : cljs.reader.reader_error.call(null, b, "Unsupported escape charater: \\", c)
+};
+cljs.reader.read_past = function(a, b) {
+  for(var c = cljs.reader.read_char.call(null, b);;) {
+    if(cljs.core.truth_(a.call(null, c))) {
+      c = cljs.reader.read_char.call(null, b)
+    }else {
+      return c
+    }
+  }
+};
+cljs.reader.read_delimited_list = function(a, b, c) {
+  for(var d = cljs.core.Vector.fromArray([]);;) {
+    var e = cljs.reader.read_past.call(null, cljs.reader.whitespace_QMARK_, b);
+    cljs.core.truth_(e) || cljs.reader.reader_error.call(null, b, "EOF");
+    if(cljs.core.truth_(cljs.core._EQ_.call(null, a, e))) {
+      return d
+    }
+    var f = cljs.core.get.call(null, cljs.reader.macros, e);
+    cljs.core.truth_(f) ? e = f.call(null, b, e) : (cljs.reader.unread.call(null, b, e), e = cljs.reader.read.call(null, b, !0, null, c));
+    d = cljs.core.truth_(cljs.core._EQ_.call(null, e, b)) ? d : cljs.core.conj.call(null, d, e)
+  }
+};
+cljs.reader.not_implemented = function(a, b) {
+  return cljs.reader.reader_error.call(null, a, "Reader for ", b, " not implemented yet")
+};
+cljs.reader.read_dispatch = function(a, b) {
+  var c = cljs.reader.read_char.call(null, a), d = cljs.core.get.call(null, cljs.reader.dispatch_macros, c);
+  return cljs.core.truth_(d) ? d.call(null, a, b) : cljs.reader.reader_error.call(null, a, "No dispatch macro for ", c)
+};
+cljs.reader.read_unmatched_delimiter = function(a, b) {
+  return cljs.reader.reader_error.call(null, a, "Unmached delimiter ", b)
+};
+cljs.reader.read_list = function(a) {
+  return cljs.core.apply.call(null, cljs.core.list, cljs.reader.read_delimited_list.call(null, ")", a, !0))
+};
+cljs.reader.read_comment = cljs.reader.skip_line;
+cljs.reader.read_vector = function(a) {
+  return cljs.reader.read_delimited_list.call(null, "]", a, !0)
+};
+cljs.reader.read_map = function(a) {
+  var b = cljs.reader.read_delimited_list.call(null, "}", a, !0);
+  cljs.core.truth_(cljs.core.odd_QMARK_.call(null, cljs.core.count.call(null, b))) && cljs.reader.reader_error.call(null, a, "Map literal must contain an even number of forms");
+  return cljs.core.apply.call(null, cljs.core.hash_map, b)
+};
+cljs.reader.read_number = function(a, b) {
+  for(var c = new goog.string.StringBuffer(b), d = cljs.reader.read_char.call(null, a);;) {
+    if(cljs.core.truth_(function() {
+      var a = null === d;
+      if(cljs.core.truth_(a)) {
+        return a
+      }
+      a = cljs.reader.whitespace_QMARK_.call(null, d);
+      return cljs.core.truth_(a) ? a : cljs.core.contains_QMARK_.call(null, cljs.reader.macros, d)
+    }())) {
+      cljs.reader.unread.call(null, a, d);
+      var e = c.toString(), c = cljs.reader.match_number.call(null, e);
+      return cljs.core.truth_(c) ? c : cljs.reader.reader_error.call(null, a, "Invalid number format [", e, "]")
+    }
+    c.append(d);
+    d = e = cljs.reader.read_char.call(null, a)
+  }
+};
+cljs.reader.read_string = function(a) {
+  for(var b = new goog.string.StringBuffer, c = cljs.reader.read_char.call(null, a);;) {
+    if(cljs.core.truth_(null === c)) {
+      return cljs.reader.reader_error.call(null, a, "EOF while reading string")
+    }
+    if(cljs.core.truth_(cljs.core._EQ_.call(null, "\\", c))) {
+      b.append(cljs.reader.escape_char.call(null, b, a)), c = cljs.reader.read_char.call(null, a)
+    }else {
+      if(cljs.core.truth_(cljs.core._EQ_.call(null, '"', c))) {
+        return b.toString()
+      }
+      if(cljs.core.truth_("\ufdd0'default")) {
+        b.append(c), c = cljs.reader.read_char.call(null, a)
+      }else {
+        return null
+      }
+    }
+  }
+};
+cljs.reader.special_symbols = cljs.core.ObjMap.fromObject(["nil", "true", "false"], {nil:null, "true":!0, "false":!1});
+cljs.reader.read_symbol = function(a, b) {
+  var c = cljs.reader.read_token.call(null, a, b);
+  return cljs.core.truth_(goog.string.contains.call(null, c, "/")) ? cljs.core.symbol.call(null, cljs.core.subs.call(null, c, 0, c.indexOf("/")), cljs.core.subs.call(null, c, c.indexOf("/") + 1, c.length)) : cljs.core.get.call(null, cljs.reader.special_symbols, c, cljs.core.symbol.call(null, c))
+};
+cljs.reader.read_keyword = function(a) {
+  var b = cljs.reader.read_token.call(null, a, cljs.reader.read_char.call(null, a)), b = cljs.core.re_matches.call(null, cljs.reader.symbol_pattern, b), c = cljs.core.nth.call(null, b, 0, null), d = cljs.core.nth.call(null, b, 1, null), e = cljs.core.nth.call(null, b, 2, null);
+  return cljs.core.truth_(function() {
+    var a;
+    a = cljs.core.not.call(null, void 0 === d);
+    a = cljs.core.truth_(a) ? ":/" === d.substring(d.length - 2, d.length) : a;
+    if(cljs.core.truth_(a)) {
+      return a
+    }
+    a = ":" === e[e.length - 1];
+    return cljs.core.truth_(a) ? a : cljs.core.not.call(null, -1 === c.indexOf("::", 1))
+  }()) ? cljs.reader.reader_error.call(null, a, "Invalid token: ", c) : cljs.core.truth_(cljs.reader.ns_QMARK_) ? cljs.core.keyword.call(null, d.substring(0, d.indexOf("/")), e) : cljs.core.keyword.call(null, c)
+};
+cljs.reader.desugar_meta = function(a) {
+  return cljs.core.truth_(cljs.core.symbol_QMARK_.call(null, a)) ? cljs.core.ObjMap.fromObject(["\ufdd0'tag"], {"\ufdd0'tag":a}) : cljs.core.truth_(cljs.core.string_QMARK_.call(null, a)) ? cljs.core.ObjMap.fromObject(["\ufdd0'tag"], {"\ufdd0'tag":a}) : cljs.core.truth_(cljs.core.keyword_QMARK_.call(null, a)) ? cljs.core.HashMap.fromArrays([a], [!0]) : cljs.core.truth_("\ufdd0'else") ? a : null
+};
+cljs.reader.wrapping_reader = function(a) {
+  return function(b) {
+    return cljs.core.list.call(null, a, cljs.reader.read.call(null, b, !0, null, !0))
+  }
+};
+cljs.reader.throwing_reader = function(a) {
+  return function(b) {
+    return cljs.reader.reader_error.call(null, b, a)
+  }
+};
+cljs.reader.read_meta = function(a) {
+  var b = cljs.reader.desugar_meta.call(null, cljs.reader.read.call(null, a, !0, null, !0));
+  cljs.core.truth_(cljs.core.map_QMARK_.call(null, b)) || cljs.reader.reader_error.call(null, a, "Metadata must be Symbol,Keyword,String or Map");
+  var c = cljs.reader.read.call(null, a, !0, null, !0);
+  return cljs.core.truth_(function() {
+    return cljs.core.truth_(function() {
+      if(cljs.core.truth_(c)) {
+        var a = c.cljs$core$IWithMeta$;
+        return cljs.core.truth_(a) ? cljs.core.not.call(null, c.hasOwnProperty("cljs$core$IWithMeta$")) : a
+      }
+      return c
+    }()) ? !0 : cljs.core.type_satisfies_.call(null, cljs.core.IWithMeta, c)
+  }()) ? cljs.core.with_meta.call(null, c, cljs.core.merge.call(null, cljs.core.meta.call(null, c), b)) : cljs.reader.reader_error.call(null, a, "Metadata can only be applied to IWithMetas")
+};
+cljs.reader.read_set = function(a) {
+  return cljs.core.set.call(null, cljs.reader.read_delimited_list.call(null, "}", a, !0))
+};
+cljs.reader.read_regex = function(a, b) {
+  return cljs.core.re_pattern.call(null, cljs.reader.read_string.call(null, a, b))
+};
+cljs.reader.read_discard = function(a) {
+  cljs.reader.read.call(null, a, !0, null, !0);
+  return a
+};
+cljs.reader.macros = cljs.core.HashMap.fromArrays("@,`,\",#,%,',(,),:,;,[,{,\\,],},^,~".split(","), [cljs.reader.wrapping_reader.call(null, "\ufdd1'deref"), cljs.reader.not_implemented, cljs.reader.read_string, cljs.reader.read_dispatch, cljs.reader.not_implemented, cljs.reader.wrapping_reader.call(null, "\ufdd1'quote"), cljs.reader.read_list, cljs.reader.read_unmatched_delimiter, cljs.reader.read_keyword, cljs.reader.not_implemented, cljs.reader.read_vector, cljs.reader.read_map, cljs.reader.read_char, 
+cljs.reader.read_unmatched_delimiter, cljs.reader.read_unmatched_delimiter, cljs.reader.read_meta, cljs.reader.not_implemented]);
+cljs.reader.dispatch_macros = cljs.core.ObjMap.fromObject(["{", "<", '"', "!", "_"], {"{":cljs.reader.read_set, "<":cljs.reader.throwing_reader.call(null, "Unreadable form"), '"':cljs.reader.read_regex, "!":cljs.reader.read_comment, _:cljs.reader.read_discard});
+cljs.reader.read = function(a, b, c) {
+  for(;;) {
+    var d = cljs.reader.read_char.call(null, a);
+    if(cljs.core.truth_(null === d)) {
+      return cljs.core.truth_(b) ? cljs.reader.reader_error.call(null, a, "EOF") : c
+    }
+    if(!cljs.core.truth_(cljs.reader.whitespace_QMARK_.call(null, d))) {
+      if(cljs.core.truth_(cljs.reader.comment_prefix_QMARK_.call(null, d))) {
+        a = cljs.reader.read_comment.call(null, a, d)
+      }else {
+        if(cljs.core.truth_("\ufdd0'else")) {
+          if(d = cljs.core.truth_(cljs.reader.macros.call(null, d)) ? cljs.reader.macros.call(null, d).call(null, a, d) : cljs.core.truth_(cljs.reader.number_literal_QMARK_.call(null, a, d)) ? cljs.reader.read_number.call(null, a, d) : cljs.core.truth_("\ufdd0'else") ? cljs.reader.read_symbol.call(null, a, d) : null, !cljs.core.truth_(cljs.core._EQ_.call(null, d, a))) {
+            return d
+          }
+        }else {
+          return null
+        }
+      }
+    }
+  }
+};
+cljs.reader.read_string = function(a) {
+  a = cljs.reader.push_back_reader.call(null, a);
+  return cljs.reader.read.call(null, a, !0, null, !1)
+};
+var fetch = {util:{}};
+fetch.util.clj__GT_js = function clj__GT_js(b) {
+  return cljs.core.truth_(cljs.core.string_QMARK_.call(null, b)) ? b : cljs.core.truth_(cljs.core.keyword_QMARK_.call(null, b)) ? cljs.core.name.call(null, b) : cljs.core.truth_(cljs.core.map_QMARK_.call(null, b)) ? cljs.core.reduce.call(null, function(b, d) {
+    var e = cljs.core.nth.call(null, d, 0, null), f = cljs.core.nth.call(null, d, 1, null);
+    return cljs.core.assoc.call(null, b, clj__GT_js.call(null, e), clj__GT_js.call(null, f))
+  }, cljs.core.ObjMap.fromObject([], {}), b).strobj : cljs.core.truth_(cljs.core.coll_QMARK_.call(null, b)) ? cljs.core.apply.call(null, cljs.core.array, cljs.core.map.call(null, clj__GT_js, b)) : cljs.core.truth_("\ufdd0'else") ? b : null
+};
 var clojure = {string:{}};
 clojure.string.seq_reverse = function(a) {
   return cljs.core.reduce.call(null, cljs.core.conj, cljs.core.List.EMPTY, a)
@@ -12864,6 +13200,198 @@ clojure.string.escape = function(a, b) {
     e += 1
   }
 };
+fetch.core = {};
+fetch.core.__GT_method = function(a) {
+  return clojure.string.upper_case.call(null, cljs.core.name.call(null, a))
+};
+fetch.core.parse_route = function(a) {
+  if(cljs.core.truth_(cljs.core.string_QMARK_.call(null, a))) {
+    return cljs.core.Vector.fromArray(["GET", a])
+  }
+  if(cljs.core.truth_(cljs.core.vector_QMARK_.call(null, a))) {
+    var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
+    return cljs.core.Vector.fromArray([fetch.core.__GT_method.call(null, b), a])
+  }
+  return cljs.core.truth_("\ufdd0'else") ? cljs.core.Vector.fromArray(["GET", a]) : null
+};
+fetch.core.__GT_data = function(a) {
+  a = fetch.util.clj__GT_js.call(null, a);
+  a = goog.Uri.QueryData.createFromMap.call(null, new goog.structs.Map(a));
+  return cljs.core.str.call(null, a)
+};
+fetch.core.__GT_callback = function(a) {
+  return cljs.core.truth_(a) ? function(b) {
+    b = b.getResponseText();
+    return a.call(null, b)
+  } : null
+};
+fetch.core.xhr = function() {
+  var a = function(a, b, e, f) {
+    var f = cljs.core.nth.call(null, f, 0, null), g = new goog.net.XhrIo, h = fetch.core.parse_route.call(null, a), a = cljs.core.nth.call(null, h, 0, null), h = cljs.core.nth.call(null, h, 1, null), b = fetch.core.__GT_data.call(null, b), i = fetch.core.__GT_callback.call(null, e);
+    cljs.core.truth_(i) && goog.events.listen.call(null, g, goog.net.EventType.COMPLETE, function() {
+      return i.call(null, g)
+    });
+    return g.send(h, a, b, cljs.core.truth_(f) ? fetch.util.clj__GT_js.call(null, f) : null)
+  }, b = function(b, d, e, f) {
+    var g = null;
+    goog.isDef(f) && (g = cljs.core.array_seq(Array.prototype.slice.call(arguments, 3), 0));
+    return a.call(this, b, d, e, g)
+  };
+  b.cljs$lang$maxFixedArity = 3;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), e = cljs.core.first(cljs.core.next(b)), f = cljs.core.first(cljs.core.next(cljs.core.next(b))), b = cljs.core.rest(cljs.core.next(cljs.core.next(b)));
+    return a.call(this, d, e, f, b)
+  };
+  return b
+}();
+fetch.remotes = {};
+fetch.remotes.remote_uri = "/pinotremotecall";
+fetch.remotes.remote_callback = function(a, b, c) {
+  return fetch.core.xhr.call(null, cljs.core.Vector.fromArray(["\ufdd0'post", fetch.remotes.remote_uri]), cljs.core.ObjMap.fromObject(["\ufdd0'remote", "\ufdd0'params"], {"\ufdd0'remote":a, "\ufdd0'params":cljs.core.pr_str.call(null, b)}), cljs.core.truth_(c) ? function(a) {
+    a = cljs.core.truth_(cljs.core._EQ_.call(null, a, "")) ? "nil" : a;
+    return c.call(null, cljs.reader.read_string.call(null, a))
+  } : null)
+};
+var jayq = {util:{}};
+jayq.util.map__GT_js = function(a) {
+  var b = cljs.core.js_obj.call(null), a = cljs.core.seq.call(null, a);
+  if(cljs.core.truth_(a)) {
+    var c = cljs.core.first.call(null, a);
+    cljs.core.nth.call(null, c, 0, null);
+    for(cljs.core.nth.call(null, c, 1, null);;) {
+      var d = c, c = cljs.core.nth.call(null, d, 0, null), d = cljs.core.nth.call(null, d, 1, null);
+      b[cljs.core.name.call(null, c)] = d;
+      a = cljs.core.next.call(null, a);
+      if(cljs.core.truth_(a)) {
+        c = a, a = cljs.core.first.call(null, c), d = c, c = a, a = d
+      }else {
+        break
+      }
+    }
+  }
+  return b
+};
+jayq.util.wait = function(a, b) {
+  return setTimeout(b, a)
+};
+jayq.util.log = function() {
+  var a = function(a, b) {
+    var e = cljs.core.truth_(cljs.core.string_QMARK_.call(null, a)) ? cljs.core.apply.call(null, cljs.core.str, a, b) : a;
+    return console.log(e)
+  }, b = function(b, d) {
+    var e = null;
+    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
+    return a.call(this, b, e)
+  };
+  b.cljs$lang$maxFixedArity = 1;
+  b.cljs$lang$applyTo = function(b) {
+    var d = cljs.core.first(b), b = cljs.core.rest(b);
+    return a.call(this, d, b)
+  };
+  return b
+}();
+jayq.util.clj__GT_js = function clj__GT_js(b) {
+  return cljs.core.truth_(cljs.core.string_QMARK_.call(null, b)) ? b : cljs.core.truth_(cljs.core.keyword_QMARK_.call(null, b)) ? cljs.core.name.call(null, b) : cljs.core.truth_(cljs.core.map_QMARK_.call(null, b)) ? cljs.core.reduce.call(null, function(b, d) {
+    var e = cljs.core.nth.call(null, d, 0, null), f = cljs.core.nth.call(null, d, 1, null);
+    return cljs.core.assoc.call(null, b, clj__GT_js.call(null, e), clj__GT_js.call(null, f))
+  }, cljs.core.ObjMap.fromObject([], {}), b).strobj : cljs.core.truth_(cljs.core.coll_QMARK_.call(null, b)) ? cljs.core.apply.call(null, cljs.core.array, cljs.core.map.call(null, clj__GT_js, b)) : cljs.core.truth_("\ufdd0'else") ? b : null
+};
+clojure.browser = {};
+clojure.browser.event = {};
+clojure.browser.event.EventType = {};
+clojure.browser.event.event_types = function(a) {
+  if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$event$EventType$event_types : a)) {
+    a = a.clojure$browser$event$EventType$event_types(a)
+  }else {
+    var b;
+    b = clojure.browser.event.event_types[goog.typeOf.call(null, a)];
+    if(!cljs.core.truth_(b) && (b = clojure.browser.event.event_types._, !cljs.core.truth_(b))) {
+      throw cljs.core.missing_protocol.call(null, "EventType.event-types", a);
+    }
+    a = b.call(null, a)
+  }
+  return a
+};
+Element.prototype.clojure$browser$event$EventType$ = !0;
+Element.prototype.clojure$browser$event$EventType$event_types = function() {
+  return cljs.core.into.call(null, cljs.core.ObjMap.fromObject([], {}), cljs.core.map.call(null, function(a) {
+    var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
+    return cljs.core.Vector.fromArray([cljs.core.keyword.call(null, b.toLowerCase()), a])
+  }, cljs.core.merge.call(null, cljs.core.js__GT_clj.call(null, goog.events.EventType))))
+};
+goog.events.EventTarget.prototype.clojure$browser$event$EventType$ = !0;
+goog.events.EventTarget.prototype.clojure$browser$event$EventType$event_types = function() {
+  return cljs.core.into.call(null, cljs.core.ObjMap.fromObject([], {}), cljs.core.map.call(null, function(a) {
+    var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
+    return cljs.core.Vector.fromArray([cljs.core.keyword.call(null, b.toLowerCase()), a])
+  }, cljs.core.merge.call(null, cljs.core.js__GT_clj.call(null, goog.events.EventType))))
+};
+clojure.browser.event.listen = function() {
+  var a = null;
+  return a = function(b, c, d, e) {
+    switch(arguments.length) {
+      case 3:
+        return a.call(null, b, c, d, !1);
+      case 4:
+        return goog.events.listen.call(null, b, cljs.core.get.call(null, clojure.browser.event.event_types.call(null, b), c, c), d, e)
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
+clojure.browser.event.listen_once = function() {
+  var a = null;
+  return a = function(b, c, d, e) {
+    switch(arguments.length) {
+      case 3:
+        return a.call(null, b, c, d, !1);
+      case 4:
+        return goog.events.listenOnce.call(null, b, cljs.core.get.call(null, clojure.browser.event.event_types.call(null, b), c, c), d, e)
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
+clojure.browser.event.unlisten = function() {
+  var a = null;
+  return a = function(b, c, d, e) {
+    switch(arguments.length) {
+      case 3:
+        return a.call(null, b, c, d, !1);
+      case 4:
+        return goog.events.unlisten.call(null, b, cljs.core.get.call(null, clojure.browser.event.event_types.call(null, b), c, c), d, e)
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
+clojure.browser.event.unlisten_by_key = function(a) {
+  return goog.events.unlistenByKey.call(null, a)
+};
+clojure.browser.event.dispatch_event = function(a, b) {
+  return goog.events.dispatchEvent.call(null, a, b)
+};
+clojure.browser.event.expose = function(a) {
+  return goog.events.expose.call(null, a)
+};
+clojure.browser.event.fire_listeners = function() {
+  return null
+};
+clojure.browser.event.total_listener_count = function() {
+  return goog.events.getTotalListenerCount.call(null)
+};
+clojure.browser.event.get_listener = function() {
+  return null
+};
+clojure.browser.event.all_listeners = function() {
+  return null
+};
+clojure.browser.event.unique_event_id = function() {
+  return null
+};
+clojure.browser.event.has_listener = function() {
+  return null
+};
+clojure.browser.event.remove_all = function() {
+  return null
+};
 var crate = {core:{}};
 crate.core.xmlns = cljs.core.ObjMap.fromObject(["\ufdd0'xhtml", "\ufdd0'svg"], {"\ufdd0'xhtml":"http://www.w3.org/1999/xhtml", "\ufdd0'svg":"http://www.w3.org/2000/svg"});
 crate.core.elem_id = cljs.core.atom.call(null, 0);
@@ -12981,50 +13509,264 @@ crate.core.html = function() {
   };
   return b
 }();
-var jayq = {util:{}};
-jayq.util.map__GT_js = function(a) {
-  var b = cljs.core.js_obj.call(null), a = cljs.core.seq.call(null, a);
-  if(cljs.core.truth_(a)) {
-    var c = cljs.core.first.call(null, a);
-    cljs.core.nth.call(null, c, 0, null);
-    for(cljs.core.nth.call(null, c, 1, null);;) {
-      var d = c, c = cljs.core.nth.call(null, d, 0, null), d = cljs.core.nth.call(null, d, 1, null);
-      b[cljs.core.name.call(null, c)] = d;
-      a = cljs.core.next.call(null, a);
-      if(cljs.core.truth_(a)) {
-        c = a, a = cljs.core.first.call(null, c), d = c, c = a, a = d
-      }else {
-        break
-      }
+clojure.browser.net = {};
+clojure.browser.net._STAR_timeout_STAR_ = 1E4;
+clojure.browser.net.event_types = cljs.core.into.call(null, cljs.core.ObjMap.fromObject([], {}), cljs.core.map.call(null, function(a) {
+  var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
+  return cljs.core.Vector.fromArray([cljs.core.keyword.call(null, b.toLowerCase()), a])
+}, cljs.core.merge.call(null, cljs.core.js__GT_clj.call(null, goog.net.EventType))));
+clojure.browser.net.IConnection = {};
+clojure.browser.net.connect = function() {
+  var a = null;
+  return function(a, c, d, e) {
+    switch(arguments.length) {
+      case 1:
+        var f;
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$connect : a)) {
+          f = a.clojure$browser$net$IConnection$connect(a)
+        }else {
+          f = clojure.browser.net.connect[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(f) && (f = clojure.browser.net.connect._, !cljs.core.truth_(f))) {
+            throw cljs.core.missing_protocol.call(null, "IConnection.connect", a);
+          }
+          f = f.call(null, a)
+        }
+        return f;
+      case 2:
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$connect : a)) {
+          f = a.clojure$browser$net$IConnection$connect(a, c)
+        }else {
+          f = clojure.browser.net.connect[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(f) && (f = clojure.browser.net.connect._, !cljs.core.truth_(f))) {
+            throw cljs.core.missing_protocol.call(null, "IConnection.connect", a);
+          }
+          f = f.call(null, a, c)
+        }
+        return f;
+      case 3:
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$connect : a)) {
+          f = a.clojure$browser$net$IConnection$connect(a, c, d)
+        }else {
+          f = clojure.browser.net.connect[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(f) && (f = clojure.browser.net.connect._, !cljs.core.truth_(f))) {
+            throw cljs.core.missing_protocol.call(null, "IConnection.connect", a);
+          }
+          f = f.call(null, a, c, d)
+        }
+        return f;
+      case 4:
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$connect : a)) {
+          f = a.clojure$browser$net$IConnection$connect(a, c, d, e)
+        }else {
+          f = clojure.browser.net.connect[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(f) && (f = clojure.browser.net.connect._, !cljs.core.truth_(f))) {
+            throw cljs.core.missing_protocol.call(null, "IConnection.connect", a);
+          }
+          f = f.call(null, a, c, d, e)
+        }
+        return f
     }
+    throw"Invalid arity: " + arguments.length;
   }
-  return b
-};
-jayq.util.wait = function(a, b) {
-  return setTimeout(b, a)
-};
-jayq.util.log = function() {
-  var a = function(a, b) {
-    var e = cljs.core.truth_(cljs.core.string_QMARK_.call(null, a)) ? cljs.core.apply.call(null, cljs.core.str, a, b) : a;
-    return console.log(e)
-  }, b = function(b, d) {
-    var e = null;
-    goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0));
-    return a.call(this, b, e)
-  };
-  b.cljs$lang$maxFixedArity = 1;
-  b.cljs$lang$applyTo = function(b) {
-    var d = cljs.core.first(b), b = cljs.core.rest(b);
-    return a.call(this, d, b)
-  };
-  return b
 }();
-jayq.util.clj__GT_js = function clj__GT_js(b) {
-  return cljs.core.truth_(cljs.core.string_QMARK_.call(null, b)) ? b : cljs.core.truth_(cljs.core.keyword_QMARK_.call(null, b)) ? cljs.core.name.call(null, b) : cljs.core.truth_(cljs.core.map_QMARK_.call(null, b)) ? cljs.core.reduce.call(null, function(b, d) {
-    var e = cljs.core.nth.call(null, d, 0, null), f = cljs.core.nth.call(null, d, 1, null);
-    return cljs.core.assoc.call(null, b, clj__GT_js.call(null, e), clj__GT_js.call(null, f))
-  }, cljs.core.ObjMap.fromObject([], {}), b).strobj : cljs.core.truth_(cljs.core.coll_QMARK_.call(null, b)) ? cljs.core.apply.call(null, cljs.core.array, cljs.core.map.call(null, clj__GT_js, b)) : cljs.core.truth_("\ufdd0'else") ? b : null
+clojure.browser.net.transmit = function() {
+  var a = null;
+  return function(a, c, d, e, f, g) {
+    switch(arguments.length) {
+      case 2:
+        var h;
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$transmit : a)) {
+          h = a.clojure$browser$net$IConnection$transmit(a, c)
+        }else {
+          h = clojure.browser.net.transmit[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(h) && (h = clojure.browser.net.transmit._, !cljs.core.truth_(h))) {
+            throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
+          }
+          h = h.call(null, a, c)
+        }
+        return h;
+      case 3:
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$transmit : a)) {
+          h = a.clojure$browser$net$IConnection$transmit(a, c, d)
+        }else {
+          h = clojure.browser.net.transmit[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(h) && (h = clojure.browser.net.transmit._, !cljs.core.truth_(h))) {
+            throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
+          }
+          h = h.call(null, a, c, d)
+        }
+        return h;
+      case 4:
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$transmit : a)) {
+          h = a.clojure$browser$net$IConnection$transmit(a, c, d, e)
+        }else {
+          h = clojure.browser.net.transmit[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(h) && (h = clojure.browser.net.transmit._, !cljs.core.truth_(h))) {
+            throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
+          }
+          h = h.call(null, a, c, d, e)
+        }
+        return h;
+      case 5:
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$transmit : a)) {
+          h = a.clojure$browser$net$IConnection$transmit(a, c, d, e, f)
+        }else {
+          h = clojure.browser.net.transmit[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(h) && (h = clojure.browser.net.transmit._, !cljs.core.truth_(h))) {
+            throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
+          }
+          h = h.call(null, a, c, d, e, f)
+        }
+        return h;
+      case 6:
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$transmit : a)) {
+          h = a.clojure$browser$net$IConnection$transmit(a, c, d, e, f, g)
+        }else {
+          h = clojure.browser.net.transmit[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(h) && (h = clojure.browser.net.transmit._, !cljs.core.truth_(h))) {
+            throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
+          }
+          h = h.call(null, a, c, d, e, f, g)
+        }
+        return h
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
+clojure.browser.net.close = function(a) {
+  if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$close : a)) {
+    a = a.clojure$browser$net$IConnection$close(a)
+  }else {
+    var b;
+    b = clojure.browser.net.close[goog.typeOf.call(null, a)];
+    if(!cljs.core.truth_(b) && (b = clojure.browser.net.close._, !cljs.core.truth_(b))) {
+      throw cljs.core.missing_protocol.call(null, "IConnection.close", a);
+    }
+    a = b.call(null, a)
+  }
+  return a
 };
+goog.net.XhrIo.prototype.clojure$browser$event$EventType$ = !0;
+goog.net.XhrIo.prototype.clojure$browser$event$EventType$event_types = function() {
+  return cljs.core.into.call(null, cljs.core.ObjMap.fromObject([], {}), cljs.core.map.call(null, function(a) {
+    var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
+    return cljs.core.Vector.fromArray([cljs.core.keyword.call(null, b.toLowerCase()), a])
+  }, cljs.core.merge.call(null, cljs.core.js__GT_clj.call(null, goog.net.EventType))))
+};
+goog.net.XhrIo.prototype.clojure$browser$net$IConnection$ = !0;
+goog.net.XhrIo.prototype.clojure$browser$net$IConnection$transmit = function() {
+  var a = null;
+  return function(a, c, d, e, f, g) {
+    switch(arguments.length) {
+      case 2:
+        return clojure.browser.net.transmit.call(null, a, c, "GET", null, null, clojure.browser.net._STAR_timeout_STAR_);
+      case 3:
+        return clojure.browser.net.transmit.call(null, a, c, d, null, null, clojure.browser.net._STAR_timeout_STAR_);
+      case 4:
+        return clojure.browser.net.transmit.call(null, a, c, d, e, null, clojure.browser.net._STAR_timeout_STAR_);
+      case 5:
+        return clojure.browser.net.transmit.call(null, a, c, d, e, f, clojure.browser.net._STAR_timeout_STAR_);
+      case 6:
+        return a.setTimeoutInterval(g), a.send(c, d, e, f)
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
+clojure.browser.net.xpc_config_fields = cljs.core.into.call(null, cljs.core.ObjMap.fromObject([], {}), cljs.core.map.call(null, function(a) {
+  var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
+  return cljs.core.Vector.fromArray([cljs.core.keyword.call(null, b.toLowerCase()), a])
+}, cljs.core.js__GT_clj.call(null, goog.net.xpc.CfgFields)));
+clojure.browser.net.xhr_connection = function() {
+  return new goog.net.XhrIo
+};
+clojure.browser.net.ICrossPageChannel = {};
+clojure.browser.net.register_service = function() {
+  var a = null;
+  return function(a, c, d, e) {
+    switch(arguments.length) {
+      case 3:
+        var f;
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$ICrossPageChannel$register_service : a)) {
+          f = a.clojure$browser$net$ICrossPageChannel$register_service(a, c, d)
+        }else {
+          f = clojure.browser.net.register_service[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(f) && (f = clojure.browser.net.register_service._, !cljs.core.truth_(f))) {
+            throw cljs.core.missing_protocol.call(null, "ICrossPageChannel.register-service", a);
+          }
+          f = f.call(null, a, c, d)
+        }
+        return f;
+      case 4:
+        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$ICrossPageChannel$register_service : a)) {
+          f = a.clojure$browser$net$ICrossPageChannel$register_service(a, c, d, e)
+        }else {
+          f = clojure.browser.net.register_service[goog.typeOf.call(null, a)];
+          if(!cljs.core.truth_(f) && (f = clojure.browser.net.register_service._, !cljs.core.truth_(f))) {
+            throw cljs.core.missing_protocol.call(null, "ICrossPageChannel.register-service", a);
+          }
+          f = f.call(null, a, c, d, e)
+        }
+        return f
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
+goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$IConnection$ = !0;
+goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$IConnection$connect = function() {
+  var a = null;
+  return function(a, c, d, e) {
+    switch(arguments.length) {
+      case 1:
+        return clojure.browser.net.connect.call(null, a, null);
+      case 2:
+        return a.connect(c);
+      case 3:
+        return clojure.browser.net.connect.call(null, a, c, d, document.body);
+      case 4:
+        return a.createPeerIframe(e, d), a.connect(c)
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
+goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$IConnection$transmit = function(a, b, c) {
+  return a.send(cljs.core.name.call(null, b), c)
+};
+goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$IConnection$close = function(a) {
+  return a.close(cljs.core.List.EMPTY)
+};
+goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$ICrossPageChannel$ = !0;
+goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$ICrossPageChannel$register_service = function() {
+  var a = null;
+  return function(a, c, d, e) {
+    switch(arguments.length) {
+      case 3:
+        return clojure.browser.net.register_service.call(null, a, c, d, !1);
+      case 4:
+        return a.registerService(cljs.core.name.call(null, c), d, e)
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
+clojure.browser.net.xpc_connection = function() {
+  var a = null, b = function(a) {
+    return new goog.net.xpc.CrossPageChannel(cljs.core.reduce.call(null, function(a, b) {
+      var c = cljs.core.nth.call(null, b, 0, null), g = cljs.core.nth.call(null, b, 1, null), c = cljs.core.get.call(null, clojure.browser.net.xpc_config_fields, c);
+      return cljs.core.truth_(c) ? cljs.core.assoc.call(null, a, c, g) : a
+    }, cljs.core.ObjMap.fromObject([], {}), a).strobj)
+  };
+  return function(a) {
+    switch(arguments.length) {
+      case 0:
+        var d;
+        d = (new goog.Uri(window.location.href)).getParameterValue("xpc");
+        d = cljs.core.truth_(d) ? new goog.net.xpc.CrossPageChannel(goog.json.parse.call(null, d)) : null;
+        return d;
+      case 1:
+        return b.call(this, a)
+    }
+    throw"Invalid arity: " + arguments.length;
+  }
+}();
 jayq.core = {};
 jayq.core.crate_meta = function(a) {
   return a.prototype._crateGroup
@@ -13304,360 +14046,6 @@ jayq.core.xhr = function(a, b, c) {
   var d = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null), b = jayq.util.map__GT_js.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'type", "\ufdd0'data", "\ufdd0'success"], {"\ufdd0'type":clojure.string.upper_case.call(null, cljs.core.name.call(null, d)), "\ufdd0'data":jayq.util.map__GT_js.call(null, b), "\ufdd0'success":c}));
   return jQuery.ajax(a, b)
 };
-clojure.browser = {};
-clojure.browser.event = {};
-clojure.browser.event.EventType = {};
-clojure.browser.event.event_types = function(a) {
-  if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$event$EventType$event_types : a)) {
-    a = a.clojure$browser$event$EventType$event_types(a)
-  }else {
-    var b;
-    b = clojure.browser.event.event_types[goog.typeOf.call(null, a)];
-    if(!cljs.core.truth_(b) && (b = clojure.browser.event.event_types._, !cljs.core.truth_(b))) {
-      throw cljs.core.missing_protocol.call(null, "EventType.event-types", a);
-    }
-    a = b.call(null, a)
-  }
-  return a
-};
-Element.prototype.clojure$browser$event$EventType$ = !0;
-Element.prototype.clojure$browser$event$EventType$event_types = function() {
-  return cljs.core.into.call(null, cljs.core.ObjMap.fromObject([], {}), cljs.core.map.call(null, function(a) {
-    var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
-    return cljs.core.Vector.fromArray([cljs.core.keyword.call(null, b.toLowerCase()), a])
-  }, cljs.core.merge.call(null, cljs.core.js__GT_clj.call(null, goog.events.EventType))))
-};
-goog.events.EventTarget.prototype.clojure$browser$event$EventType$ = !0;
-goog.events.EventTarget.prototype.clojure$browser$event$EventType$event_types = function() {
-  return cljs.core.into.call(null, cljs.core.ObjMap.fromObject([], {}), cljs.core.map.call(null, function(a) {
-    var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
-    return cljs.core.Vector.fromArray([cljs.core.keyword.call(null, b.toLowerCase()), a])
-  }, cljs.core.merge.call(null, cljs.core.js__GT_clj.call(null, goog.events.EventType))))
-};
-clojure.browser.event.listen = function() {
-  var a = null;
-  return a = function(b, c, d, e) {
-    switch(arguments.length) {
-      case 3:
-        return a.call(null, b, c, d, !1);
-      case 4:
-        return goog.events.listen.call(null, b, cljs.core.get.call(null, clojure.browser.event.event_types.call(null, b), c, c), d, e)
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-clojure.browser.event.listen_once = function() {
-  var a = null;
-  return a = function(b, c, d, e) {
-    switch(arguments.length) {
-      case 3:
-        return a.call(null, b, c, d, !1);
-      case 4:
-        return goog.events.listenOnce.call(null, b, cljs.core.get.call(null, clojure.browser.event.event_types.call(null, b), c, c), d, e)
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-clojure.browser.event.unlisten = function() {
-  var a = null;
-  return a = function(b, c, d, e) {
-    switch(arguments.length) {
-      case 3:
-        return a.call(null, b, c, d, !1);
-      case 4:
-        return goog.events.unlisten.call(null, b, cljs.core.get.call(null, clojure.browser.event.event_types.call(null, b), c, c), d, e)
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-clojure.browser.event.unlisten_by_key = function(a) {
-  return goog.events.unlistenByKey.call(null, a)
-};
-clojure.browser.event.dispatch_event = function(a, b) {
-  return goog.events.dispatchEvent.call(null, a, b)
-};
-clojure.browser.event.expose = function(a) {
-  return goog.events.expose.call(null, a)
-};
-clojure.browser.event.fire_listeners = function() {
-  return null
-};
-clojure.browser.event.total_listener_count = function() {
-  return goog.events.getTotalListenerCount.call(null)
-};
-clojure.browser.event.get_listener = function() {
-  return null
-};
-clojure.browser.event.all_listeners = function() {
-  return null
-};
-clojure.browser.event.unique_event_id = function() {
-  return null
-};
-clojure.browser.event.has_listener = function() {
-  return null
-};
-clojure.browser.event.remove_all = function() {
-  return null
-};
-clojure.browser.net = {};
-clojure.browser.net._STAR_timeout_STAR_ = 1E4;
-clojure.browser.net.event_types = cljs.core.into.call(null, cljs.core.ObjMap.fromObject([], {}), cljs.core.map.call(null, function(a) {
-  var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
-  return cljs.core.Vector.fromArray([cljs.core.keyword.call(null, b.toLowerCase()), a])
-}, cljs.core.merge.call(null, cljs.core.js__GT_clj.call(null, goog.net.EventType))));
-clojure.browser.net.IConnection = {};
-clojure.browser.net.connect = function() {
-  var a = null;
-  return function(a, c, d, e) {
-    switch(arguments.length) {
-      case 1:
-        var f;
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$connect : a)) {
-          f = a.clojure$browser$net$IConnection$connect(a)
-        }else {
-          f = clojure.browser.net.connect[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(f) && (f = clojure.browser.net.connect._, !cljs.core.truth_(f))) {
-            throw cljs.core.missing_protocol.call(null, "IConnection.connect", a);
-          }
-          f = f.call(null, a)
-        }
-        return f;
-      case 2:
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$connect : a)) {
-          f = a.clojure$browser$net$IConnection$connect(a, c)
-        }else {
-          f = clojure.browser.net.connect[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(f) && (f = clojure.browser.net.connect._, !cljs.core.truth_(f))) {
-            throw cljs.core.missing_protocol.call(null, "IConnection.connect", a);
-          }
-          f = f.call(null, a, c)
-        }
-        return f;
-      case 3:
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$connect : a)) {
-          f = a.clojure$browser$net$IConnection$connect(a, c, d)
-        }else {
-          f = clojure.browser.net.connect[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(f) && (f = clojure.browser.net.connect._, !cljs.core.truth_(f))) {
-            throw cljs.core.missing_protocol.call(null, "IConnection.connect", a);
-          }
-          f = f.call(null, a, c, d)
-        }
-        return f;
-      case 4:
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$connect : a)) {
-          f = a.clojure$browser$net$IConnection$connect(a, c, d, e)
-        }else {
-          f = clojure.browser.net.connect[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(f) && (f = clojure.browser.net.connect._, !cljs.core.truth_(f))) {
-            throw cljs.core.missing_protocol.call(null, "IConnection.connect", a);
-          }
-          f = f.call(null, a, c, d, e)
-        }
-        return f
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-clojure.browser.net.transmit = function() {
-  var a = null;
-  return function(a, c, d, e, f, g) {
-    switch(arguments.length) {
-      case 2:
-        var h;
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$transmit : a)) {
-          h = a.clojure$browser$net$IConnection$transmit(a, c)
-        }else {
-          h = clojure.browser.net.transmit[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(h) && (h = clojure.browser.net.transmit._, !cljs.core.truth_(h))) {
-            throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
-          }
-          h = h.call(null, a, c)
-        }
-        return h;
-      case 3:
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$transmit : a)) {
-          h = a.clojure$browser$net$IConnection$transmit(a, c, d)
-        }else {
-          h = clojure.browser.net.transmit[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(h) && (h = clojure.browser.net.transmit._, !cljs.core.truth_(h))) {
-            throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
-          }
-          h = h.call(null, a, c, d)
-        }
-        return h;
-      case 4:
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$transmit : a)) {
-          h = a.clojure$browser$net$IConnection$transmit(a, c, d, e)
-        }else {
-          h = clojure.browser.net.transmit[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(h) && (h = clojure.browser.net.transmit._, !cljs.core.truth_(h))) {
-            throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
-          }
-          h = h.call(null, a, c, d, e)
-        }
-        return h;
-      case 5:
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$transmit : a)) {
-          h = a.clojure$browser$net$IConnection$transmit(a, c, d, e, f)
-        }else {
-          h = clojure.browser.net.transmit[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(h) && (h = clojure.browser.net.transmit._, !cljs.core.truth_(h))) {
-            throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
-          }
-          h = h.call(null, a, c, d, e, f)
-        }
-        return h;
-      case 6:
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$transmit : a)) {
-          h = a.clojure$browser$net$IConnection$transmit(a, c, d, e, f, g)
-        }else {
-          h = clojure.browser.net.transmit[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(h) && (h = clojure.browser.net.transmit._, !cljs.core.truth_(h))) {
-            throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
-          }
-          h = h.call(null, a, c, d, e, f, g)
-        }
-        return h
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-clojure.browser.net.close = function(a) {
-  if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$IConnection$close : a)) {
-    a = a.clojure$browser$net$IConnection$close(a)
-  }else {
-    var b;
-    b = clojure.browser.net.close[goog.typeOf.call(null, a)];
-    if(!cljs.core.truth_(b) && (b = clojure.browser.net.close._, !cljs.core.truth_(b))) {
-      throw cljs.core.missing_protocol.call(null, "IConnection.close", a);
-    }
-    a = b.call(null, a)
-  }
-  return a
-};
-goog.net.XhrIo.prototype.clojure$browser$event$EventType$ = !0;
-goog.net.XhrIo.prototype.clojure$browser$event$EventType$event_types = function() {
-  return cljs.core.into.call(null, cljs.core.ObjMap.fromObject([], {}), cljs.core.map.call(null, function(a) {
-    var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
-    return cljs.core.Vector.fromArray([cljs.core.keyword.call(null, b.toLowerCase()), a])
-  }, cljs.core.merge.call(null, cljs.core.js__GT_clj.call(null, goog.net.EventType))))
-};
-goog.net.XhrIo.prototype.clojure$browser$net$IConnection$ = !0;
-goog.net.XhrIo.prototype.clojure$browser$net$IConnection$transmit = function() {
-  var a = null;
-  return function(a, c, d, e, f, g) {
-    switch(arguments.length) {
-      case 2:
-        return clojure.browser.net.transmit.call(null, a, c, "GET", null, null, clojure.browser.net._STAR_timeout_STAR_);
-      case 3:
-        return clojure.browser.net.transmit.call(null, a, c, d, null, null, clojure.browser.net._STAR_timeout_STAR_);
-      case 4:
-        return clojure.browser.net.transmit.call(null, a, c, d, e, null, clojure.browser.net._STAR_timeout_STAR_);
-      case 5:
-        return clojure.browser.net.transmit.call(null, a, c, d, e, f, clojure.browser.net._STAR_timeout_STAR_);
-      case 6:
-        return a.setTimeoutInterval(g), a.send(c, d, e, f)
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-clojure.browser.net.xpc_config_fields = cljs.core.into.call(null, cljs.core.ObjMap.fromObject([], {}), cljs.core.map.call(null, function(a) {
-  var b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null);
-  return cljs.core.Vector.fromArray([cljs.core.keyword.call(null, b.toLowerCase()), a])
-}, cljs.core.js__GT_clj.call(null, goog.net.xpc.CfgFields)));
-clojure.browser.net.xhr_connection = function() {
-  return new goog.net.XhrIo
-};
-clojure.browser.net.ICrossPageChannel = {};
-clojure.browser.net.register_service = function() {
-  var a = null;
-  return function(a, c, d, e) {
-    switch(arguments.length) {
-      case 3:
-        var f;
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$ICrossPageChannel$register_service : a)) {
-          f = a.clojure$browser$net$ICrossPageChannel$register_service(a, c, d)
-        }else {
-          f = clojure.browser.net.register_service[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(f) && (f = clojure.browser.net.register_service._, !cljs.core.truth_(f))) {
-            throw cljs.core.missing_protocol.call(null, "ICrossPageChannel.register-service", a);
-          }
-          f = f.call(null, a, c, d)
-        }
-        return f;
-      case 4:
-        if(cljs.core.truth_(cljs.core.truth_(a) ? a.clojure$browser$net$ICrossPageChannel$register_service : a)) {
-          f = a.clojure$browser$net$ICrossPageChannel$register_service(a, c, d, e)
-        }else {
-          f = clojure.browser.net.register_service[goog.typeOf.call(null, a)];
-          if(!cljs.core.truth_(f) && (f = clojure.browser.net.register_service._, !cljs.core.truth_(f))) {
-            throw cljs.core.missing_protocol.call(null, "ICrossPageChannel.register-service", a);
-          }
-          f = f.call(null, a, c, d, e)
-        }
-        return f
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$IConnection$ = !0;
-goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$IConnection$connect = function() {
-  var a = null;
-  return function(a, c, d, e) {
-    switch(arguments.length) {
-      case 1:
-        return clojure.browser.net.connect.call(null, a, null);
-      case 2:
-        return a.connect(c);
-      case 3:
-        return clojure.browser.net.connect.call(null, a, c, d, document.body);
-      case 4:
-        return a.createPeerIframe(e, d), a.connect(c)
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$IConnection$transmit = function(a, b, c) {
-  return a.send(cljs.core.name.call(null, b), c)
-};
-goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$IConnection$close = function(a) {
-  return a.close(cljs.core.List.EMPTY)
-};
-goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$ICrossPageChannel$ = !0;
-goog.net.xpc.CrossPageChannel.prototype.clojure$browser$net$ICrossPageChannel$register_service = function() {
-  var a = null;
-  return function(a, c, d, e) {
-    switch(arguments.length) {
-      case 3:
-        return clojure.browser.net.register_service.call(null, a, c, d, !1);
-      case 4:
-        return a.registerService(cljs.core.name.call(null, c), d, e)
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
-clojure.browser.net.xpc_connection = function() {
-  var a = null, b = function(a) {
-    return new goog.net.xpc.CrossPageChannel(cljs.core.reduce.call(null, function(a, b) {
-      var c = cljs.core.nth.call(null, b, 0, null), g = cljs.core.nth.call(null, b, 1, null), c = cljs.core.get.call(null, clojure.browser.net.xpc_config_fields, c);
-      return cljs.core.truth_(c) ? cljs.core.assoc.call(null, a, c, g) : a
-    }, cljs.core.ObjMap.fromObject([], {}), a).strobj)
-  };
-  return function(a) {
-    switch(arguments.length) {
-      case 0:
-        var d;
-        d = (new goog.Uri(window.location.href)).getParameterValue("xpc");
-        d = cljs.core.truth_(d) ? new goog.net.xpc.CrossPageChannel(goog.json.parse.call(null, d)) : null;
-        return d;
-      case 1:
-        return b.call(this, a)
-    }
-    throw"Invalid arity: " + arguments.length;
-  }
-}();
 clojure.browser.repl = {};
 clojure.browser.repl.xpc_connection = cljs.core.atom.call(null, null);
 clojure.browser.repl.repl_print = function(a) {
@@ -13735,17 +14123,18 @@ clojure.browser.repl.connect = function(a) {
     return a.style.display = "none"
   })
 };
-var eastercalc = {repl:{}};
-eastercalc.repl.enable_browser_repl = function() {
-  return clojure.browser.repl.connect.call(null, "http://localhost:9000/repl")
-};
-eastercalc.core = {};
-eastercalc.core.clj__GT_js = function clj__GT_js(b) {
+var eastercalc = {util:{}};
+eastercalc.util.clj__GT_js = function clj__GT_js(b) {
   return cljs.core.truth_(cljs.core.string_QMARK_.call(null, b)) ? b : cljs.core.truth_(cljs.core.keyword_QMARK_.call(null, b)) ? cljs.core.name.call(null, b) : cljs.core.truth_(cljs.core.map_QMARK_.call(null, b)) ? cljs.core.reduce.call(null, function(b, d) {
     var e = cljs.core.nth.call(null, d, 0, null), f = cljs.core.nth.call(null, d, 1, null);
     return cljs.core.assoc.call(null, b, clj__GT_js.call(null, e), clj__GT_js.call(null, f))
   }, cljs.core.ObjMap.fromObject([], {}), b).strobj : cljs.core.truth_(cljs.core.coll_QMARK_.call(null, b)) ? cljs.core.apply.call(null, cljs.core.array, cljs.core.map.call(null, clj__GT_js, b)) : cljs.core.truth_("\ufdd0'else") ? b : null
 };
+eastercalc.repl = {};
+eastercalc.repl.enable_browser_repl = function() {
+  return clojure.browser.repl.connect.call(null, "http://localhost:9000/repl")
+};
+eastercalc.core = {};
 eastercalc.core.enable_tooltips = function() {
   jayq.core.$.call(null, "\ufdd0'#year-start-tip").tooltip();
   return jayq.core.$.call(null, "\ufdd0'#year-end-tip").tooltip()
@@ -13757,7 +14146,7 @@ eastercalc.core.clear_form = function() {
 eastercalc.core.bind_clear_form = function() {
   return jayq.core.bind.call(null, jayq.core.$.call(null, "#clear-form"), "click", eastercalc.core.clear_form)
 };
-var group__3091__auto____23738 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+var group__3115__auto____11868 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.dates_for_years_table = function(a, b) {
   var c = crate.core.html.call(null, cljs.core.truth_(b) ? cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span5"}), cljs.core.Vector.fromArray(["\ufdd0'h3", a]), cljs.core.Vector.fromArray(["\ufdd0'table", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"table table-striped table-bordered"}), cljs.core.Vector.fromArray(["\ufdd0'thead", cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'th", "Year"]), 
   cljs.core.Vector.fromArray(["\ufdd0'th", "Date"])])]), cljs.core.Vector.fromArray(["\ufdd0'tbody", function() {
@@ -13766,18 +14155,18 @@ eastercalc.core.dates_for_years_table = function(a, b) {
         for(;;) {
           if(cljs.core.truth_(cljs.core.seq.call(null, a))) {
             var b = cljs.core.first.call(null, a);
-            return cljs.core.cons.call(null, cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'td", cljs.core.str.call(null, b.year)]), cljs.core.Vector.fromArray(["\ufdd0'td", cljs.core.str.call(null, b.date)])]), e.call(null, cljs.core.rest.call(null, a)))
+            return cljs.core.cons.call(null, cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'td", cljs.core.str.call(null, b.call(null, "year"))]), cljs.core.Vector.fromArray(["\ufdd0'td", cljs.core.str.call(null, b.call(null, "date"))])]), e.call(null, cljs.core.rest.call(null, a)))
           }
           return null
         }
       })
     }.call(null, b)
   }()])])]) : cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span6"})]));
-  c.setAttribute("crateGroup", group__3091__auto____23738);
+  c.setAttribute("crateGroup", group__3115__auto____11868);
   return c
 };
-eastercalc.core.dates_for_years_table.prototype._crateGroup = group__3091__auto____23738;
-var group__3091__auto____23745 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+eastercalc.core.dates_for_years_table.prototype._crateGroup = group__3115__auto____11868;
+var group__3115__auto____11875 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.years_for_dates_table = function(a, b) {
   var c = crate.core.html.call(null, cljs.core.truth_(b) ? cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span5"}), cljs.core.Vector.fromArray(["\ufdd0'h3", a]), cljs.core.Vector.fromArray(["\ufdd0'table", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"table table-striped table-bordered"}), cljs.core.Vector.fromArray(["\ufdd0'thead", cljs.core.Vector.fromArray(["\ufdd0'tr", cljs.core.Vector.fromArray(["\ufdd0'th", "Date"]), 
   cljs.core.Vector.fromArray(["\ufdd0'th", "Years"])])]), cljs.core.Vector.fromArray(["\ufdd0'tbody", function() {
@@ -13793,28 +14182,26 @@ eastercalc.core.years_for_dates_table = function(a, b) {
       })
     }.call(null, cljs.core.js__GT_clj.call(null, b))
   }()])])]) : cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span6"})]));
-  c.setAttribute("crateGroup", group__3091__auto____23745);
+  c.setAttribute("crateGroup", group__3115__auto____11875);
   return c
 };
-eastercalc.core.years_for_dates_table.prototype._crateGroup = group__3091__auto____23745;
-var group__3091__auto____23752 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
+eastercalc.core.years_for_dates_table.prototype._crateGroup = group__3115__auto____11875;
+var group__3115__auto____11882 = cljs.core.swap_BANG_.call(null, crate.core.group_id, cljs.core.inc);
 eastercalc.core.disclaimer = function(a) {
   a = crate.core.html.call(null, cljs.core.Vector.fromArray(["\ufdd0'div", cljs.core.ObjMap.fromObject(["\ufdd0'class"], {"\ufdd0'class":"span12"}), cljs.core.Vector.fromArray(["\ufdd0'span", cljs.core.Vector.fromArray(["\ufdd0'em", a])])]));
-  a.setAttribute("crateGroup", group__3091__auto____23752);
+  a.setAttribute("crateGroup", group__3115__auto____11882);
   return a
 };
-eastercalc.core.disclaimer.prototype._crateGroup = group__3091__auto____23752;
+eastercalc.core.disclaimer.prototype._crateGroup = group__3115__auto____11882;
 eastercalc.core.submit_dates_for_years = function() {
   var a = jayq.core.$.call(null, "#eastern").is(":checked"), b = jayq.core.$.call(null, "#western").is(":checked"), c = jayq.core.val.call(null, jayq.core.$.call(null, "#year-start")), d = jayq.core.val.call(null, jayq.core.$.call(null, "#year-end"));
-  return jQuery.ajax(eastercalc.core.clj__GT_js.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'url", "\ufdd0'dataType", "\ufdd0'data", "\ufdd0'success", "\ufdd0'error"], {"\ufdd0'url":"/data/dates-for-years", "\ufdd0'dataType":"json", "\ufdd0'data":cljs.core.ObjMap.fromObject(["\ufdd0'eastern", "\ufdd0'western", "\ufdd0'year-start", "\ufdd0'year-end"], {"\ufdd0'eastern":a, "\ufdd0'western":b, "\ufdd0'year-start":c, "\ufdd0'year-end":d}), "\ufdd0'success":function(a) {
-    return jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.inner.call(null, jayq.core.$.call(null, "\ufdd0'#results"), ""), eastercalc.core.disclaimer.call(null, a.disclaimer)), eastercalc.core.dates_for_years_table.call(null, "Orthodox Pascha", a.eastern)), eastercalc.core.dates_for_years_table.call(null, "Western Easter", a.western))
-  }, "\ufdd0'error":function(a) {
-    return console.log(cljs.core.str.call(null, "An error occurred: ", a))
-  }})))
+  return fetch.remotes.remote_callback.call(null, "dates-for-years", cljs.core.Vector.fromArray([cljs.core.ObjMap.fromObject(["\ufdd0'eastern", "\ufdd0'western", "\ufdd0'year-start", "\ufdd0'year-end"], {"\ufdd0'eastern":a, "\ufdd0'western":b, "\ufdd0'year-start":c, "\ufdd0'year-end":d})]), function(a) {
+    return jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.inner.call(null, jayq.core.$.call(null, "\ufdd0'#results"), ""), eastercalc.core.disclaimer.call(null, a.call(null, "disclaimer"))), eastercalc.core.dates_for_years_table.call(null, "Orthodox Pascha", a.call(null, "eastern"))), eastercalc.core.dates_for_years_table.call(null, "Western Easter", a.call(null, "western")))
+  })
 };
 eastercalc.core.submit_years_for_dates = function() {
   var a = jayq.core.$.call(null, "#eastern").is(":checked"), b = jayq.core.$.call(null, "#western").is(":checked"), c = jayq.core.val.call(null, jayq.core.$.call(null, "#year-start")), d = jayq.core.val.call(null, jayq.core.$.call(null, "#year-end"));
-  return jQuery.ajax(eastercalc.core.clj__GT_js.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'url", "\ufdd0'dataType", "\ufdd0'data", "\ufdd0'success", "\ufdd0'error"], {"\ufdd0'url":"/data/years-for-dates", "\ufdd0'dataType":"json", "\ufdd0'data":cljs.core.ObjMap.fromObject(["\ufdd0'eastern", "\ufdd0'western", "\ufdd0'year-start", "\ufdd0'year-end"], {"\ufdd0'eastern":a, "\ufdd0'western":b, "\ufdd0'year-start":c, "\ufdd0'year-end":d}), "\ufdd0'success":function(a) {
+  return jQuery.ajax(eastercalc.util.clj__GT_js.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'url", "\ufdd0'dataType", "\ufdd0'data", "\ufdd0'success", "\ufdd0'error"], {"\ufdd0'url":"/data/years-for-dates", "\ufdd0'dataType":"json", "\ufdd0'data":cljs.core.ObjMap.fromObject(["\ufdd0'eastern", "\ufdd0'western", "\ufdd0'year-start", "\ufdd0'year-end"], {"\ufdd0'eastern":a, "\ufdd0'western":b, "\ufdd0'year-start":c, "\ufdd0'year-end":d}), "\ufdd0'success":function(a) {
     return jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.append.call(null, jayq.core.inner.call(null, jayq.core.$.call(null, "\ufdd0'#results"), ""), eastercalc.core.disclaimer.call(null, a.disclaimer)), eastercalc.core.years_for_dates_table.call(null, "Orthodox Pascha", a.eastern)), eastercalc.core.years_for_dates_table.call(null, "Western Easter", a.western))
   }, "\ufdd0'error":function(a) {
     return console.log(cljs.core.str.call(null, "An error occurred: ", a))
@@ -13830,4 +14217,3 @@ eastercalc.live = {};
 eastercalc.core.enable_tooltips.call(null);
 eastercalc.core.bind_clear_form.call(null);
 eastercalc.core.bind_submit_dates_for_years.call(null);
-eastercalc.core.bind_submit_years_for_dates.call(null);

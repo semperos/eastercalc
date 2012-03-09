@@ -5,25 +5,25 @@ goog.require('goog.events.EventTarget');
 goog.require('goog.events.EventType');
 clojure.browser.event.EventType = {};
 clojure.browser.event.event_types = (function event_types(this$){
-if(cljs.core.truth_((function (){var and__3546__auto____25568 = this$;
+if(cljs.core.truth_((function (){var and__3546__auto____13703 = this$;
 
-if(cljs.core.truth_(and__3546__auto____25568))
+if(cljs.core.truth_(and__3546__auto____13703))
 {return this$.clojure$browser$event$EventType$event_types;
 } else
-{return and__3546__auto____25568;
+{return and__3546__auto____13703;
 }
 })()))
 {return this$.clojure$browser$event$EventType$event_types(this$);
 } else
-{return (function (){var or__3548__auto____25569 = (clojure.browser.event.event_types[goog.typeOf.call(null,this$)]);
+{return (function (){var or__3548__auto____13704 = (clojure.browser.event.event_types[goog.typeOf.call(null,this$)]);
 
-if(cljs.core.truth_(or__3548__auto____25569))
-{return or__3548__auto____25569;
+if(cljs.core.truth_(or__3548__auto____13704))
+{return or__3548__auto____13704;
 } else
-{var or__3548__auto____25570 = (clojure.browser.event.event_types["_"]);
+{var or__3548__auto____13705 = (clojure.browser.event.event_types["_"]);
 
-if(cljs.core.truth_(or__3548__auto____25570))
-{return or__3548__auto____25570;
+if(cljs.core.truth_(or__3548__auto____13705))
+{return or__3548__auto____13705;
 } else
 {throw cljs.core.missing_protocol.call(null,"EventType.event-types",this$);
 }
@@ -33,38 +33,38 @@ if(cljs.core.truth_(or__3548__auto____25570))
 });
 Element.prototype.clojure$browser$event$EventType$ = true;
 Element.prototype.clojure$browser$event$EventType$event_types = (function (this$){
-return cljs.core.into.call(null,cljs.core.ObjMap.fromObject([],{}),cljs.core.map.call(null,(function (p__25571){
-var vec__25572__25573 = p__25571;
-var k__25574 = cljs.core.nth.call(null,vec__25572__25573,0,null);
-var v__25575 = cljs.core.nth.call(null,vec__25572__25573,1,null);
+return cljs.core.into.call(null,cljs.core.ObjMap.fromObject([],{}),cljs.core.map.call(null,(function (p__13706){
+var vec__13707__13708 = p__13706;
+var k__13709 = cljs.core.nth.call(null,vec__13707__13708,0,null);
+var v__13710 = cljs.core.nth.call(null,vec__13707__13708,1,null);
 
-return cljs.core.Vector.fromArray([cljs.core.keyword.call(null,k__25574.toLowerCase()),v__25575]);
+return cljs.core.Vector.fromArray([cljs.core.keyword.call(null,k__13709.toLowerCase()),v__13710]);
 }),cljs.core.merge.call(null,cljs.core.js__GT_clj.call(null,goog.events.EventType))));
 });
 goog.events.EventTarget.prototype.clojure$browser$event$EventType$ = true;
 goog.events.EventTarget.prototype.clojure$browser$event$EventType$event_types = (function (this$){
-return cljs.core.into.call(null,cljs.core.ObjMap.fromObject([],{}),cljs.core.map.call(null,(function (p__25576){
-var vec__25577__25578 = p__25576;
-var k__25579 = cljs.core.nth.call(null,vec__25577__25578,0,null);
-var v__25580 = cljs.core.nth.call(null,vec__25577__25578,1,null);
+return cljs.core.into.call(null,cljs.core.ObjMap.fromObject([],{}),cljs.core.map.call(null,(function (p__13711){
+var vec__13712__13713 = p__13711;
+var k__13714 = cljs.core.nth.call(null,vec__13712__13713,0,null);
+var v__13715 = cljs.core.nth.call(null,vec__13712__13713,1,null);
 
-return cljs.core.Vector.fromArray([cljs.core.keyword.call(null,k__25579.toLowerCase()),v__25580]);
+return cljs.core.Vector.fromArray([cljs.core.keyword.call(null,k__13714.toLowerCase()),v__13715]);
 }),cljs.core.merge.call(null,cljs.core.js__GT_clj.call(null,goog.events.EventType))));
 });
 clojure.browser.event.listen = (function() {
 var listen = null;
-var listen__25581 = (function (src,type,fn){
+var listen__13716 = (function (src,type,fn){
 return listen.call(null,src,type,fn,false);
 });
-var listen__25582 = (function (src,type,fn,capture_QMARK_){
+var listen__13717 = (function (src,type,fn,capture_QMARK_){
 return goog.events.listen.call(null,src,cljs.core.get.call(null,clojure.browser.event.event_types.call(null,src),type,type),fn,capture_QMARK_);
 });
 listen = function(src,type,fn,capture_QMARK_){
 switch(arguments.length){
 case  3 :
-return listen__25581.call(this,src,type,fn);
+return listen__13716.call(this,src,type,fn);
 case  4 :
-return listen__25582.call(this,src,type,fn,capture_QMARK_);
+return listen__13717.call(this,src,type,fn,capture_QMARK_);
 }
 throw('Invalid arity: ' + arguments.length);
 };
@@ -73,18 +73,18 @@ return listen;
 ;
 clojure.browser.event.listen_once = (function() {
 var listen_once = null;
-var listen_once__25584 = (function (src,type,fn){
+var listen_once__13719 = (function (src,type,fn){
 return listen_once.call(null,src,type,fn,false);
 });
-var listen_once__25585 = (function (src,type,fn,capture_QMARK_){
+var listen_once__13720 = (function (src,type,fn,capture_QMARK_){
 return goog.events.listenOnce.call(null,src,cljs.core.get.call(null,clojure.browser.event.event_types.call(null,src),type,type),fn,capture_QMARK_);
 });
 listen_once = function(src,type,fn,capture_QMARK_){
 switch(arguments.length){
 case  3 :
-return listen_once__25584.call(this,src,type,fn);
+return listen_once__13719.call(this,src,type,fn);
 case  4 :
-return listen_once__25585.call(this,src,type,fn,capture_QMARK_);
+return listen_once__13720.call(this,src,type,fn,capture_QMARK_);
 }
 throw('Invalid arity: ' + arguments.length);
 };
@@ -93,18 +93,18 @@ return listen_once;
 ;
 clojure.browser.event.unlisten = (function() {
 var unlisten = null;
-var unlisten__25587 = (function (src,type,fn){
+var unlisten__13722 = (function (src,type,fn){
 return unlisten.call(null,src,type,fn,false);
 });
-var unlisten__25588 = (function (src,type,fn,capture_QMARK_){
+var unlisten__13723 = (function (src,type,fn,capture_QMARK_){
 return goog.events.unlisten.call(null,src,cljs.core.get.call(null,clojure.browser.event.event_types.call(null,src),type,type),fn,capture_QMARK_);
 });
 unlisten = function(src,type,fn,capture_QMARK_){
 switch(arguments.length){
 case  3 :
-return unlisten__25587.call(this,src,type,fn);
+return unlisten__13722.call(this,src,type,fn);
 case  4 :
-return unlisten__25588.call(this,src,type,fn,capture_QMARK_);
+return unlisten__13723.call(this,src,type,fn,capture_QMARK_);
 }
 throw('Invalid arity: ' + arguments.length);
 };
