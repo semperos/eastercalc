@@ -40,8 +40,8 @@
           [:td (str (m "date"))]])]]]
     [:div {:class "span6"}]))
 
-(defpartial years-for-dates-table [title seq-of-maps]
-  (if seq-of-maps
+(defpartial years-for-dates-table [title seq-of-vecs]
+  (if seq-of-vecs
     [:div {:class "span5"}
      [:h3 title]
      [:table {:class "table table-striped table-bordered"}
@@ -50,10 +50,10 @@
         [:th "Date"]
         [:th "Years"]]]
       [:tbody
-       (for [item (js->clj seq-of-maps)]
+       (for [vc seq-of-vecs]
          [:tr
-          [:td (first item)]
-          [:td (string/join ", " (second item))]])]]]
+          [:td (first vc)]
+          [:td (string/join ", " (second vc))]])]]]
     [:div {:class "span6"}]))
 
 (defpartial disclaimer [s]
@@ -65,8 +65,8 @@
   []
   (let [eastern (.is ($ "#eastern") ":checked")
         western (.is ($ "#western") ":checked")
-        year-start (val ($ "#year-start"))
-        year-end (val ($ "#year-end"))]
+        year-start (val ($ "#year-start-dates"))
+        year-end (val ($ "#year-end-dates"))]
     (f/letrem [data (dates-for-years {:eastern eastern
                                       :western western
                                       :year-start year-start
@@ -81,29 +81,38 @@
   []
   (let [eastern (.is ($ "#eastern") ":checked")
         western (.is ($ "#western") ":checked")
-        year-start (val ($ "#year-start"))
-        year-end (val ($ "#year-end"))]
-    (.ajax js/jQuery
-           (clj->js {:url "/data/years-for-dates"
-                     :dataType "json"
-                     :data {:eastern eastern
-                            :western western
-                            :year-start year-start
-                            :year-end year-end}
-                     :success (fn [data]
-                                (-> ($ :#results)
-                                    (inner "")
-                                    (append (disclaimer (.-disclaimer data)))
-                                    (append (years-for-dates-table "Orthodox Pascha" (.-eastern data)))
-                                    (append (years-for-dates-table "Western Easter" (.-western data)))))
-                     :error (fn [e] (. js/console log (str "An error occurred: " e)))}))))
+        year-start (val ($ "#year-start-years"))
+        year-end (val ($ "#year-end-years"))]
+    (f/letrem [data (years-for-dates {:eastern eastern
+                                      :western western
+                                      :year-start year-start
+                                      :year-end year-end})]
+              (. js/console log (ffirst (data "eastern")))
+              (. js/console log (second (first (data "eastern"))))
+              (-> ($ :#results)
+                  (inner "")
+                  (append (disclaimer (data "disclaimer")))
+                  (append (years-for-dates-table "Orthodox Pascha" (data "eastern")))
+                  (append (years-for-dates-table "Western Easter" (data "western")))))))
 
 (defn bind-submit-dates-for-years
   []
   (-> ($ "#submit-dates-for-years")
-      (bind "click" submit-dates-for-years)))
+      (bind "click" submit-dates-for-years))
+  (-> ($ "#year-start-dates")
+      (bind "keypress" (fn [e] (when (= (.-keyCode e) 13)
+                                (submit-dates-for-years)))))
+  (-> ($ "#year-end-dates")
+      (bind "keypress" (fn [e] (when (= (.-keyCode e) 13)
+                                (submit-dates-for-years))))))
 
 (defn bind-submit-years-for-dates
   []
   (-> ($ "#submit-years-for-dates")
-      (bind "click" submit-years-for-dates)))
+      (bind "click" submit-years-for-dates))
+  (-> ($ "#year-start-years")
+      (bind "keypress" (fn [e] (when (= (.-keyCode e) 13)
+                                (submit-years-for-dates)))))
+  (-> ($ "#year-end-years")
+      (bind "keypress" (fn [e] (when (= (.-keyCode e) 13)
+                                (submit-years-for-dates))))))
