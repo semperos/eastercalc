@@ -63,3 +63,16 @@
 
 (def easter easter-nature)
 
+(defn month-of-year-str
+  [date]
+  (let [month (str (.getMonthOfYear date))]
+    (if (= (count month) 1)
+      (str "0" month)
+      month)))
+
+(defn day-of-month-str
+  [date]
+  (let [day (str (.getDayOfMonth date))]
+    (if (= (count day) 1)
+      (str "0" day)
+      day)))

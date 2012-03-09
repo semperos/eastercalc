@@ -3,7 +3,7 @@
         [noir.response :only [json]]
         [cheshire.core :only [encode]]
         clj-time.format
-        [eastercalc.calc :only [pascha easter]]))
+        [eastercalc.calc :only [pascha easter month-of-year-str day-of-month-str]]))
 
 (def month-day-formatter
   (formatter "MM/dd"))
@@ -36,10 +36,10 @@
                     :eastern (when-not (= eastern "false")
                                 (sort (group-by (fn [year]
                                                   (let [date (pascha year)]
-                                                    (str (.getMonthOfYear date) "/" (.getDayOfMonth date))))
+                                                    (str (month-of-year-str date) "/" (day-of-month-str date))))
                                                 years)))
                     :western (when-not (= western "false")
                                (sort (group-by (fn [year]
                                                  (let [date (easter year)]
-                                                   (str (.getMonthOfYear date) "/" (.getDayOfMonth date))))
+                                                   (str (month-of-year-str date) "/" (day-of-month-str date))))
                                                years)))})}))
