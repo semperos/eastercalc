@@ -1,24 +1,11 @@
 (ns eastercalc.core
-  (:use [jayq.core :only [$ bind attr val append inner]])
+  (:use [eastercalc.util :only [clj->js]]
+        [jayq.core :only [$ bind attr val append inner]])
   (:require [crate.core :as crate]
+            [fetch.remotes :as remotes]
             [clojure.string :as string])
-  (:use-macros [crate.macros :only [defpartial]]))
-
-;; Utilities
-(defn clj->js
-  "Recursively transforms ClojureScript maps into Javascript objects,
-   other ClojureScript colls into JavaScript arrays, and ClojureScript
-   keywords into JavaScript strings.
-
-   Borrowed and updated from mmcgrana."
-  [x]
-  (cond
-    (string? x) x
-    (keyword? x) (name x)
-    (map? x) (.-strobj (reduce (fn [m [k v]]
-               (assoc m (clj->js k) (clj->js v))) {} x))
-    (coll? x) (apply array (map clj->js x))
-    :else x))
+  (:use-macros [crate.macros :only [defpartial]])
+  (:require-macros [fetch.macros :as f]))
 
 ;; Tooltips
 (defn enable-tooltips
@@ -47,10 +34,10 @@
         [:th "Year"]
         [:th "Date"]]]
       [:tbody
-       (for [entry seq-of-maps]
+       (for [m seq-of-maps]
          [:tr
-          [:td (str (.-year entry))]
-          [:td (str (.-date entry))]])]]]
+          [:td (str (m "year"))]
+          [:td (str (m "date"))]])]]]
     [:div {:class "span6"}]))
 
 (defpartial years-for-dates-table [title seq-of-maps]
@@ -80,20 +67,15 @@
         western (.is ($ "#western") ":checked")
         year-start (val ($ "#year-start"))
         year-end (val ($ "#year-end"))]
-    (.ajax js/jQuery
-           (clj->js {:url "/data/dates-for-years"
-                     :dataType "json"
-                     :data {:eastern eastern
-                            :western western
-                            :year-start year-start
-                            :year-end year-end}
-                     :success (fn [data]
-                                (-> ($ :#results)
-                                    (inner "")
-                                    (append (disclaimer (.-disclaimer data)))
-                                    (append (dates-for-years-table "Orthodox Pascha" (.-eastern data)))
-                                    (append (dates-for-years-table "Western Easter" (.-western data)))))
-                     :error (fn [e] (. js/console log (str "An error occurred: " e)))}))))
+    (f/letrem [data (dates-for-years {:eastern eastern
+                                      :western western
+                                      :year-start year-start
+                                      :year-end year-end})]
+              (-> ($ :#results)
+                  (inner "")
+                  (append (disclaimer (data "disclaimer")))
+                  (append (dates-for-years-table "Orthodox Pascha" (data "eastern")))
+                  (append (dates-for-years-table "Western Easter" (data "western")))))))
 
 (defn submit-years-for-dates
   []
