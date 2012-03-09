@@ -1,8 +1,10 @@
 (ns eastercalc.server
-  (:use [clojure.tools.cli :only [cli]])
+  (:use noir.fetch.remotes
+        [clojure.tools.cli :only [cli]])
   (:require [noir.server :as server]))
 
 (server/load-views "src/clj/eastercalc/views/")
+(server/add-middleware wrap-remotes)
 
 (defn -main [& args]
   (let [[options args banner] (cli args
