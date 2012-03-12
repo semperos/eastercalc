@@ -1,6 +1,6 @@
 # Calculating Pascha and Easter
 
-This is a web app (written with [Noir](https://github.com/ibdknox/noir) that provides two views:
+This is a web app (written with [Noir](https://github.com/ibdknox/noir)) that provides two views:
 
  1. Calculate the date of easter for the years of a given time span
  2. Calculate all the years for each date of easter for a given time span
